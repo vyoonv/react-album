@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useMemo, useState } from 'react'
+import { useRecoilValueLoadable } from 'recoil'
 import { imageData } from '../../store/selectors/imageSelector'
 import CommonHeader from '../../components/common/header/CommonHeader'
 import CommonNav from '../../components/common/navigation/CommonNav'
@@ -13,15 +13,31 @@ import { CardDTO } from './types/card'
 
 
 function index() {
-    const imgSelector = useRecoilValue(imageData)
+    // const imgSelector = useRecoilValue(imageData) 아래 코드로 수정 
+    const imgSelector = useRecoilValueLoadable(imageData)
     const [imgData, setImgData] = useState<CardDTO>()
     const [open, setOpen] = useState<boolean>(false) // 이미지 상세 다이얼로그 발생(관리) state
     
-    const CARD_LIST = imgSelector.data.results.map((card: CardDTO) => {
+    /* const CARD_LIST = imgSelector.data.results.map((card: CardDTO) => {
         return (
             <Card data={card} key={card.id} handleDialog={setOpen} handleSetData={setImgData} />
         )
-    })
+    }) */ 
+
+    // store과 비슷하게 useMemo로 캐싱     
+    const CARD_LIST = useMemo( () => {
+        // imgSelector.stat = hasValue or loading
+        if(imgSelector.state === "hasValue") {
+            const result = imgSelector.contents.map((card: CardDTO) => {
+                return (
+                    <Card data={card} key={card.id} handleDialog={setOpen} handleSetData={setImgData} />
+                )
+            })
+            return result
+        } else {
+            return <div>loading...</div>
+        }
+    }, [imgSelector] )
 
   return (
     <div className={styles.page}>
@@ -48,7 +64,7 @@ function index() {
         </div>
         {/* 공통 푸터 UI 부분  */}
         <CommonFooter />
-        {open && <DetailDialog data={imgData}/>}
+        {open && <DetailDialog data={imgData} handleDialog={setOpen} />}
     </div>
   )
 }

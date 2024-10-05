@@ -3,18 +3,23 @@ import styles from './DetailDialog.module.scss'
 
 interface Props {
     data: CardDTO
+    handleDialog: (eventValue: boolean) => void
 }
 
-function DetailDialog({data}: Props) {
+function DetailDialog({data, handleDialog}: Props) {
+
+    const closeDialog = () => {
+        handleDialog(false)
+    }
 
   return (
     <div className={styles.container}>
         <div className={styles.container__dialog}>
             <div className={styles.container__dialog__header}>
                 <div className={styles.close}>
-                    <button className={styles.close__button}>
+                    <button className={styles.close__button} onClick={closeDialog}>
                         {/* 구글 아이콘을 사용 */}
-                        <span className='material-symbols-outlines' style={{fontSize: 26 + 'px'}}>close</span>
+                        <span className="material-symbols-outlined" style={{fontSize: 26 + 'px'}}>close</span>
                     </button>
                     <img src={data.user.profile_image.small} alt='사진작가 프로필' className={styles.close__authorImage} />
                     <span className={styles.close__authorName}>{data.user.name}</span>
@@ -22,7 +27,7 @@ function DetailDialog({data}: Props) {
                 <div className={styles.bookmark}>
                     <button className={styles.bookmark__button}>
                         {/* 구글 아이콘 사용 */}
-                        <span className='material-symbols-outlines' style={{fontSize: 16 + 'px'}}>favorite</span>
+                        <span className='material-symbols-outlined' style={{fontSize: 16 + 'px'}}>favorite</span>
                     </button>
                     <button className={styles.bookmark__button}>다운로드</button>
                 </div>

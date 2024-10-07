@@ -7,6 +7,7 @@ import CommonSearchBar from '../../components/common/searchBar/CommonSearchBar'
 import CommonFooter from '../../components/common/footer/CommonFooter'
 import Card from './component/Card'
 import DetailDialog from '../../components/common/dialog/DetailDialog'
+import Loading from './component/Loading'
 // css
 import styles from './styles/index.module.scss'
 import { CardDTO } from './types/card'
@@ -28,14 +29,14 @@ function index() {
     const CARD_LIST = useMemo( () => {
         // imgSelector.stat = hasValue or loading
         if(imgSelector.state === "hasValue") {
-            const result = imgSelector.contents.map((card: CardDTO) => {
+            const result = imgSelector.contents.results.map((card: CardDTO) => {
                 return (
                     <Card data={card} key={card.id} handleDialog={setOpen} handleSetData={setImgData} />
                 )
             })
             return result
         } else {
-            return <div>loading...</div>
+            return <Loading />
         }
     }, [imgSelector] )
 
@@ -45,7 +46,7 @@ function index() {
         <CommonHeader />
         {/* 공통 네비게이션 UI 부분 */}
         <CommonNav />
-        <div className={styles.page__contents}>
+        <main className={styles.page__contents}>
             <div className={styles.page__contents__introBox}>
                 <div className={styles.wrapper}>
                     <span className={styles.wrapper__title}>PhotoSplash</span>
@@ -61,7 +62,7 @@ function index() {
                 {/* Props : 부모 컴포넌트에서 자식 컴포넌트로 데이터를 전달하는 작업  */}
                 {CARD_LIST}
             </div>
-        </div>
+        </main>
         {/* 공통 푸터 UI 부분  */}
         <CommonFooter />
         {open && <DetailDialog data={imgData} handleDialog={setOpen} />}

@@ -103,6 +103,8 @@
             height: calc(100% - 220px);
 
             .image {
+                max-height: 100%; // 최대 높이를 100%로 제한
+                max-width: 100%; // 최대 너비를 100%로 제한
                 height: 100%;
                 object-fit: cover;
             }

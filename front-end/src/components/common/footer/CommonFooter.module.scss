@@ -34,7 +34,7 @@
 
         font-family: 'Public Sans', sans-serif;
         font-size: 16px;
-        font-weight: 700;
+        font-weight: 600;
         line-height: 16px;
 
         background:  transparent;
@@ -44,20 +44,19 @@
         cursor: pointer;
 
         &:hover {
-            background-color: $color-gray-100;
-            border-radius: 4px;
-
             color: $color-black-900;
+            font-weight: 800;
+
+            width: 30px;
         }
         &.active {
-            background-color: $color-gray-100;
-            border-radius: 4px;
+            background-color: $color-lightBlue-100;
+            border-radius: 15px;
 
             color: $color-black-900;
         }
         &.inactive {
             background-color: $color-white-000;
-            border-radius: 4px;
 
             color: $color-black-900;
         }

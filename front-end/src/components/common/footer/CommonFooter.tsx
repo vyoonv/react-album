@@ -53,8 +53,6 @@ function CommonFooter() {
         <button className={styles.pagination__button} onClick={moveToPrev}>
             <img src='src/assets/icons/icon-arrowLeft.svg' alt=''/>
         </button>
-        {/* 변경될 UI 부분 */}
-        {/* <span>1</span> */}
         {res[step] && 
           res[step].map( (item: number, index: number) => {
             if(page < 11) {

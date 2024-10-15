@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.album.react.user.model.mapper">
+
+	<insert id="saveUser" parameterType="User">
+	INSERT INTO USER VALUES (
+		SEQ_USER.NEXTVAL,
+		#{userName}, 
+		#{userId},
+		#{userEmail}, 
+		#{userProfile}, 
+		#{registerDate}, 
+		#{userDelFl}
+	)
+	</insert>
+
+</mapper>

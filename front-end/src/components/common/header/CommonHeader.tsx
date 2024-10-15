@@ -16,6 +16,18 @@ function CommonHeader() {
     const profile = JSON.parse(atob(credentialResponse.credential.split('.')[1])); 
     setUser({name: profile.name, email: profile.email}); 
     setIsLoggedIn(true); 
+
+    fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userName: profile.name,
+        userEmail: profile.email,
+        userProfile: profile.picture,
+      })
+    })
   }
 
   // 로그인 실패 시 

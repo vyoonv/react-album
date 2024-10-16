@@ -17,7 +17,6 @@ public class User {
 	
 	private int userNo; 
 	private String userName; 
-	private String userId; 
 	private String userEmail;
 	private String userProfile;
 	private String registerDate; 

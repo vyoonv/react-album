@@ -4,7 +4,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.album.react.user.model.dto.User;
 
-
 @Mapper
 public interface UserMapper {
 

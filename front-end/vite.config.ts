@@ -23,5 +23,14 @@ export default defineConfig({
         additionalData: `@import "./src/assets/styles/main.scss";`,
       }
     }
-  }
+  },
+
+  server: {
+    proxy: {
+      '/login': {
+        target: 'http://localhost:80', // Spring Boot 서버 주소
+        changeOrigin: true,
+      },
+    },
+  },
 })

@@ -15,23 +15,33 @@ function CommonHeader() {
   const handleLoginSuccess = (credentialResponse: CredentialResponse) => {
     if (credentialResponse.credential) {
       const profile = JSON.parse(atob(credentialResponse.credential.split('.')[1]));
+      const registerDate = new Date().toISOString().split('T')[0]; 
+      console.log('profile :: ', profile); 
       setUser({ name: profile.name, email: profile.email });
       setIsLoggedIn(true);
   
       fetch('http://localhost:80/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           userName: profile.name,
           userEmail: profile.email,
           userProfile: profile.picture,
-        }),
-      });
-    } else {
-      console.error("Credential is undefined");
-    }
+          registerDate,
+          userDelFl: "N" 
+      }),
+    })
+    .then(response => {
+      if (!response.ok) {
+          throw new Error('Network response error');
+      }
+      return response.text();
+  })
+  .then(data => console.log(data))
+  .catch(error => console.error('error: ', error));
+}
   }
 
   // 로그인 실패 시 

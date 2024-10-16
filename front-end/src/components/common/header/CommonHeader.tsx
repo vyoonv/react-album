@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import styles from './CommonHeader.module.scss'
 import { useState } from 'react'
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google'
+import { GoogleOAuthProvider, GoogleLogin, CredentialResponse } from '@react-oauth/google'
 
 function CommonHeader() {
 
@@ -12,22 +12,26 @@ function CommonHeader() {
   const [user, setUser] = useState({ name: '', email: ''}); 
   
   // 로그인 성공 시 
-  const handleLoginSuccess = (credentialResponse) => {
-    const profile = JSON.parse(atob(credentialResponse.credential.split('.')[1])); 
-    setUser({name: profile.name, email: profile.email}); 
-    setIsLoggedIn(true); 
-
-    fetch('/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userName: profile.name,
-        userEmail: profile.email,
-        userProfile: profile.picture,
-      })
-    })
+  const handleLoginSuccess = (credentialResponse: CredentialResponse) => {
+    if (credentialResponse.credential) {
+      const profile = JSON.parse(atob(credentialResponse.credential.split('.')[1]));
+      setUser({ name: profile.name, email: profile.email });
+      setIsLoggedIn(true);
+  
+      fetch('http://localhost:80/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userName: profile.name,
+          userEmail: profile.email,
+          userProfile: profile.picture,
+        }),
+      });
+    } else {
+      console.error("Credential is undefined");
+    }
   }
 
   // 로그인 실패 시 

@@ -9,7 +9,7 @@ function CommonSearchBar() {
     const [page, setPage] = useRecoilState(pageState)
     const [text, setText] = useState('')
     const onChange = (event) => {
-        console.log(event.target.value)
+        //console.log(event.target.value)
         setText(event.target.value)
     }
     const onSearch = () => {

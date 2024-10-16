@@ -10,14 +10,16 @@ interface Props {
 function Card({data, handleDialog, handleSetData}: Props) {
 
     const openDialog = () => {
-        console.log("함수호출"); 
+        //console.log("함수호출"); 
         handleDialog(true)
         handleSetData(data)
     }
 
+    const imageUrl = data.urls?.small || data.url;
+
     return (
         <div className={Styles.card} onClick={openDialog}>
-            <img src={data.urls.small} alt={data.alt_description} className={Styles.card__image} />
+            <img src={imageUrl} alt={data.alt_description} className={Styles.card__image} />
         </div>
     )
 }

@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { CardDTO, Tag } from '../../../pages/index/types/card'
 import styles from './DetailDialog.module.scss'
 import { toast } from 'react-toastify';
+import { bookmarkState } from '../../../store/atoms/bookMark';
+import { useRecoilState } from 'recoil';
 
 interface Props {
     data: CardDTO
@@ -9,82 +11,109 @@ interface Props {
 }
 
 function DetailDialog({data, handleDialog}: Props) {
-
-    const [bookmark, setBookmark] = useState(false)
+    
+    const [bookmarks, setBookmarks] = useRecoilState(bookmarkState); 
+    
     // 다이얼로그 끄기 
-    const closeDialog = (event: any) => {
+    const closeDialog = () => {
         handleDialog(false)
-        event.stopPropagation
-    }
-
-    // 북마크 추가 이벤트 
-    const addBookmark = (selected: CardDTO) => {
-        setBookmark(true) // true값으로 바뀌면 
-
-        const getLocalStorage = JSON.parse(localStorage.getItem('bookmark') || '[]') // null처리 꼭 해주기 
-
-        // 1. 로컬스토리지에 bookmark이라는 데이터가 없을 경우
-        if (!getLocalStorage || getLocalStorage === null) {
-            localStorage.setItem('bookmarks', JSON.stringify([selected]))
-            toast.info('해당 이미지를 북마크에 저장하였습니다. 😄')
-        } else {
-            // 2. 이미 해당 이미지가 로컬스토리지 bookmark라는 데이터에 저장되어 있는 경우 
-            if(getLocalStorage.findIndex((item: CardDTO) => item.id === selected.id) > -1) {
-                toast.info('해당 이미지는 이미 추가되어 있습니다')
-            } else {
-                // 3. 해당 이미지가 로컬스토리지 bookmark라는 데이터에 저장되어있지 않은 경우 + bookmark라는 데이터에 이미 어떤 값이 담긴 경우 
-                const res = [...getLocalStorage]
-                res.push(selected)
-                localStorage.setItem('bookmark', JSON.stringify(res))
-
-                toast.info('해당 이미지를 북마크에 저장하였습니다. 😘')
-            }
-        }
-        
     }
 
     useEffect( () => {
-        const getLocalStorage = JSON.parse(localStorage.getItem('bookmark') || '[]')
-
-        if(getLocalStorage && getLocalStorage.findIndex((item: CardDTO) => item.id === data.id) > -1) {
-            setBookmark(true)
-        } else if (!getLocalStorage) return
-
+        
         // ESC 키를 눌렀을 때, 다이얼로그 창 닫기 
-        const escKeyDownCloseDialog = (event: React.KeyboardEvent) => {
+        const escKeyDownCloseDialog = (event: KeyboardEvent) => {
             if(event.key === 'Escape') {
-                closeDialog()
+                closeDialog();
             }
         }
-
+        
         window.addEventListener('keydown', escKeyDownCloseDialog)
         return () => window.removeEventListener('keydown', escKeyDownCloseDialog)
     }, [])
+                    
+    // 북마크 추가 이벤트 
+    const addBookmark = async (selected: CardDTO) => {
+        const userEmail = localStorage.getItem('userEmail')
+        
+        const isBookmarked = bookmarks.find( (item) => item.id === selected.id); 
 
-  return (
+        if(isBookmarked) {
+            toast.info('해당 이미지는 이미 추가되어 있습니다.'); 
+            return; 
+        }
+        // DB에 추가
+        try {
+
+            let bookmarkData: any;
+            // unsplash 이미지인 경우 
+            if(selected.urls) {
+                const { id, urls, user, width, height, created_at } = selected;
+                bookmarkData = {
+                    imageId: id,
+                    imageUrl: urls.regular, // 또는 다른 적절한 URL
+                    authorName: user.name,
+                    width,
+                    height,
+                    description: selected.description || '',
+                    source: 'unsplash'
+                };
+            } else {
+                // 사용자 업로드 이미지인 경우
+                const { id, url, uploader, width, height, created_at } = selected;
+                bookmarkData = {
+                    ...selected,
+                    id,
+                    url,
+                    uploader,
+                    width,
+                    height,
+                    created_at,
+                    source: 'user_upload'
+                };
+            }
+
+            const response = await fetch('http://localhost:80/bookmark', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(bookmarkData),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json(); // 오류 메시지 가져오기
+                throw new Error(errorData.message || '북마크 추가 실패하였습니다.');
+            }
+
+            const data = await response.json();
+            setBookmarks(prev => [...prev, bookmarkData]);
+            toast.info('해당 이미지를 북마크에 저장하였습니다.😘');
+        } catch (error) {
+            console.error('Error adding bookmark:', error);
+    }
+    }
+                    
+    return (
     <div className={styles.container} onClick={closeDialog}>
         <div className={styles.container__dialog}>
             <div className={styles.container__dialog__header}>
                 <div className={styles.close}>
                     <button className={styles.close__button} onClick={closeDialog}>
-                        {/* 구글 아이콘을 사용 */}
+                        {/* 구글 아이콘 사용 */}
                         <span className="material-symbols-outlined" style={{fontSize: 26 + 'px'}}>close</span>
                     </button>
                     <img src={data.user.profile_image.small} alt='사진작가 프로필' className={styles.close__authorImage} />
                     <span className={styles.close__authorName}>{data.user.name}</span>
                 </div>
                 <div className={styles.bookmark}>
-                    <button className={styles.bookmark__button} onClick={()=>{addBookmark(data)}}>
-                        {/* 구글 아이콘 사용 */}
-                        {bookmark === false ? (
-                            <span className='material-symbols-outlined' style={{fontSize: 16 +'px'}}>favorite</span>
-                        ) : (
-                            <span className='material-symbols-outlined' style={{fontSize: 16 + 'px', color: 'red'}}>favorite</span>
-                        )}
-                        
-                    </button>
-                    <button className={styles.bookmark__button}>다운로드</button>
-                </div>
+                        <button className={styles.bookmark__button} onClick={() => addBookmark(data)}>
+                            <span className='material-symbols-outlined' style={{ fontSize: '16px', color: bookmarks.some(item => item.id === data.id) ? 'red' : 'black' }}>
+                                favorite
+                            </span>
+                        </button>
+                        <button className={styles.bookmark__button}>다운로드</button>
+                    </div>
             </div> 
             <div className={styles.container__dialog__body}>
                 <img src={data.urls.small} alt='상세이미지' className={styles.image} />

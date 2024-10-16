@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.album.react.bookmark.model.mapper.BookmarkMapper">
+
+	<!-- 이메일로 userNo 넘겨받기 -->
+	<select id="getUserNoByEmail">
+		SELECT USER_NO
+		FROM USERS
+		WHERE USER_EMAIL = #{userEmail} 
+	</select>
+	
+	<!-- 북마크 추가하기 -->
+	<insert id="insertBookmark">
+		INSERT INTO BOOKMARK VALUES(
+			SEQ_BOOKMARK.NEXTVAL,
+			default, 
+			#{photoNo},
+			#{userNo}
+		)
+	</insert>
+
+</mapper>

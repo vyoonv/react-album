@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { useRecoilValueLoadable } from 'recoil'
+import { useRecoilValue, useRecoilValueLoadable } from 'recoil'
 import { imageData } from '../../store/selectors/imageSelector'
 import CommonHeader from '../../components/common/header/CommonHeader'
 import CommonNav from '../../components/common/navigation/CommonNav'
@@ -11,6 +11,7 @@ import Loading from './component/Loading'
 // css
 import styles from './styles/index.module.scss'
 import { CardDTO } from './types/card'
+import { userState } from '../../store/atoms/userState'
 
 
 function index() {
@@ -18,6 +19,7 @@ function index() {
     const imgSelector = useRecoilValueLoadable(imageData)
     const [imgData, setImgData] = useState<CardDTO>()
     const [open, setOpen] = useState<boolean>(false) // 이미지 상세 다이얼로그 발생(관리) state
+    const user = useRecoilValue(userState); 
     
     /* const CARD_LIST = imgSelector.data.results.map((card: CardDTO) => {
         return (
@@ -43,7 +45,7 @@ function index() {
   return (
     <div className={styles.page}>
         {/* 공통 헤더 UI 부분 */}
-        <CommonHeader />
+        <CommonHeader user={user}/>
         {/* 공통 네비게이션 UI 부분 */}
         <CommonNav />
         <main className={styles.page__contents}>
@@ -65,7 +67,7 @@ function index() {
         </main>
         {/* 공통 푸터 UI 부분  */}
         <CommonFooter />
-        {open && <DetailDialog data={imgData} handleDialog={setOpen} />}
+        {open && <DetailDialog data={imgData} handleDialog={setOpen} userEmail={user.email}/>}
     </div>
   )
 }

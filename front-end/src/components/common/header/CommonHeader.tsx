@@ -2,15 +2,15 @@ import { useNavigate } from 'react-router-dom'
 import styles from './CommonHeader.module.scss'
 import { useEffect, useState } from 'react'
 import { GoogleOAuthProvider, GoogleLogin, CredentialResponse } from '@react-oauth/google'
+import { useRecoilState } from 'recoil';
+import { userState } from '../../../store/atoms/userState'
 
 function CommonHeader() {
 
   const navigate = useNavigate()
-
-  // 로그인 
+  const [user, setUser] = useRecoilState(userState); 
   const [isLoggedIn, setIsLoggedIn] = useState(false); 
-  const [user, setUser] = useState({ name: '', email: ''}); 
-  
+
   // 로그인 성공 시 
   const handleLoginSuccess = (credentialResponse: CredentialResponse) => {
     if (credentialResponse.credential) {
@@ -117,7 +117,7 @@ function CommonHeader() {
           <div className={styles.header__profileBox}>
             {isLoggedIn ? (
               <>
-              <button className={styles.header__profileBox__button}>사진 제출</button>
+              <button className={styles.header__profileBox__button}>업로드</button>
               <button className={styles.header__profileBox__button} onClick={() => moveToPage('bookmark')}>북마크</button>
               <span className={styles.header__profileBox__userName}>{user.name} | {user.email}</span>
               <button className={styles.header__profileBox__button} onClick={handleLogout}>로그아웃</button>

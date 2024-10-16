@@ -1,5 +1,8 @@
 package com.album.react.user.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,6 +32,19 @@ public class UserController {
 		service.saveUser(user); 
 		
 		return ResponseEntity.ok("환영합니다~"); 
+	}
+	
+	@PostMapping("/checkUser")
+	public ResponseEntity<Map<String, Object>> checkUser( @RequestBody Map<String, String> request) {
+		
+		String userEmail = request.get("userEmail"); 
+		boolean exists = service.userExists(userEmail); 
+		
+		Map<String, Object> response = new HashMap<>(); 
+		response.put("exists", exists); 
+		
+		return ResponseEntity.ok(response);
+		
 	}
 
 }

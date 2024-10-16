@@ -18,15 +18,25 @@ public class UserServiceImpl implements UserService {
 	
 	private final UserMapper mapper; 
 
+	/**
+	 * 회원 정보 저장 
+	 */
 	@Override
 	public User saveUser(User user) {
 		
-//		user.setRegisterDate(LocalDateTime.now().toString());
-//		user.setUserDelFl("N");
 		mapper.saveUser(user);
 		
 		return user; 
 		
+	}
+
+	/**
+	 * 존재하는 회원인지 여부 확인 
+	 */
+	@Override
+	public boolean userExists(String userEmail) {
+		
+		return mapper.userExists(userEmail) > 0;
 	}
 
 }

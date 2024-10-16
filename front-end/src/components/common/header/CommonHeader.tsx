@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import styles from './CommonHeader.module.scss'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GoogleOAuthProvider, GoogleLogin, CredentialResponse } from '@react-oauth/google'
 
 function CommonHeader() {
@@ -15,38 +15,90 @@ function CommonHeader() {
   const handleLoginSuccess = (credentialResponse: CredentialResponse) => {
     if (credentialResponse.credential) {
       const profile = JSON.parse(atob(credentialResponse.credential.split('.')[1]));
-      const registerDate = new Date().toISOString().split('T')[0]; 
-      console.log('profile :: ', profile); 
+      const registerDate = new Date().toISOString().split('T')[0]; // 날짜 yyyy-mm-dd 형식으로 넘기기 
+      // console.log('profile :: ', profile); 
+
+      // 사용자 정보를 로컬 스토리지에 저장 
+      localStorage.setItem('user', JSON.stringify({
+        name: profile.name, 
+        email: profile.email,
+        userProfile: profile.picture, 
+      }) );
+
       setUser({ name: profile.name, email: profile.email });
       setIsLoggedIn(true);
-  
-      fetch('http://localhost:80/login', {
+
+      // 기존 사용자 여부 확인 
+      fetch('http://localhost:80/checkUser', { 
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userName: profile.name,
-          userEmail: profile.email,
-          userProfile: profile.picture,
-          registerDate,
-          userDelFl: "N" 
-      }),
+            userEmail: profile.email,
+        }),
+     })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response error');
+        }
+        return response.json(); // 존재 여부 확인
+    })
+    .then(data => {
+        if (!data.exists) { // 존재하지 않는다면 
+            return fetch('http://localhost:80/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userName: profile.name,
+                    userEmail: profile.email,
+                    userProfile: profile.picture,
+                    registerDate,
+                    userDelFl: "N" 
+                }),
+            });
+        }
     })
     .then(response => {
-      if (!response.ok) {
-          throw new Error('Network response error');
-      }
-      return response.text();
-  })
-  .then(data => console.log(data))
-  .catch(error => console.error('error: ', error));
-}
+        if (response && !response.ok) {
+            throw new Error('Network response error');
+        }
+        return response ? response.text() : null;
+    })
+    .then(data => {
+        if (data) {
+            console.log(data);
+        }
+    })
+    .catch(error => console.error('error: ', error));
+    } else {
+        console.error("Credential is undefined");
+    } 
   }
 
   // 로그인 실패 시 
   const handleLoginFailure = () => {
     console.log('로그인 실패'); 
+  }
+
+  // 로그인 유지 
+  useEffect( () => {
+    const storedUser = localStorage.getItem('user'); 
+    if(storedUser) {
+      const parsedser = JSON.parse(storedUser); 
+      setUser(parsedser); 
+      setIsLoggedIn(true); 
+    }
+  }, [])
+
+  // 로그아웃 
+  const handleLogout = () => {
+    localStorage.removeItem('user'); 
+    setUser({ name: '', email: '' }); 
+    setIsLoggedIn(false); 
+    navigate('/');
   }
 
   // 페이지 이동 
@@ -68,6 +120,7 @@ function CommonHeader() {
               <button className={styles.header__profileBox__button}>사진 제출</button>
               <button className={styles.header__profileBox__button} onClick={() => moveToPage('bookmark')}>북마크</button>
               <span className={styles.header__profileBox__userName}>{user.name} | {user.email}</span>
+              <button className={styles.header__profileBox__button} onClick={handleLogout}>로그아웃</button>
               </>
             ) : (
               <GoogleLogin 

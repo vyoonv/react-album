@@ -1,7 +1,10 @@
 package com.album.react.bookmark.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,16 +46,20 @@ public class BookmarkController {
 		
 		return ResponseEntity.ok("북마크가 추가되었습니다."); 
 		
-//		
-//		int photoNo = bookmarkRequest.getPhotoNo(); // 사용자 업로드 이미지인 경우 photoNo 가져오기 
-//		String imageUrl = bookmarkRequest.getImageUrl();  // api 이미지인 경우 imageUrl 가져오기 
-//		
-//		Bookmark bookmark = new Bookmark(); 
-//		bookmark.setPhotoNo(photoNo); 
-//		bookmark.setUserNo(userNo); 
-//		
-//		service.addBookmark(bookmark); 
+	}
+	
+	@DeleteMapping("/bookmark/{imageId}")
+	public ResponseEntity<String> deleteBookmark (@PathVariable("imageId") String imageId) {
 		
+			try {
+				service.deleteBookmark(imageId); 
+				
+				return ResponseEntity.ok("북마크가 삭제되었습니다.");
+				
+			} catch (Exception e) {
+				
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("북마크 삭제 중 오류 발생했습니다.");
+			}
 	}
 
 }

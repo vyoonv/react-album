@@ -7,13 +7,16 @@ import { CardDTO } from '../index/types/card'
 
 function index() {
     const [data, setData] = useState<CardDTO[]>([])
+
     const getData = () => {
         const getLocalStorage = JSON.parse(localStorage.getItem('bookmark') || '[]')
+        console.log('loaded bookmarks : ', getLocalStorage)
         setData(getLocalStorage)
     }
 
     useEffect( () => {
         getData()
+        // console.log('current bookmarks : ', data) 비어있고 
     }, [])
 
   return (

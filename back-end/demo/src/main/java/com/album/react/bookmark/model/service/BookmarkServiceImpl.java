@@ -31,4 +31,11 @@ public class BookmarkServiceImpl implements BookmarkService {
 		return userNo;
 	}
 
+	@Override
+	public void deleteBookmark(String imageId) {
+		
+		mapper.deleteBookmark(imageId);
+		
+	}
+
 }

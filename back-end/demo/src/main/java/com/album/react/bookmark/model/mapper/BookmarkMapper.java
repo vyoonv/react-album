@@ -17,4 +17,6 @@ public interface BookmarkMapper {
 	 */
 	void addBookmark(Bookmark bookmark);
 
+	public void deleteBookmark(String imageId);
+
 }

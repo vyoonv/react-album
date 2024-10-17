@@ -15,4 +15,6 @@ public interface BookmarkService {
 	 */
 	int getUserNoByEmail(String userEmail);
 
+	void deleteBookmark(String imageId);
+
 }

@@ -25,5 +25,10 @@
 			#{likes}
 		)
 	</insert>
+	
+	<delete id="deleteBookmark">
+		DELETE FROM BOOKMARK
+		WHERE IMAGE_ID = #{imageId}
+	</delete>
 
 </mapper>

@@ -4,6 +4,7 @@ import styles from './DetailDialog.module.scss'
 import { toast } from 'react-toastify';
 import { bookmarkState } from '../../../store/atoms/bookmarkState';
 import { useRecoilState } from 'recoil';
+import { totalmem } from 'os';
 
 interface Props {
     data: CardDTO
@@ -14,14 +15,16 @@ function DetailDialog({data, handleDialog}: Props) {
     
     const [bookmarks, setBookmarks] = useRecoilState(bookmarkState); 
 
+    // 로컬 스토리지에서 북마크 로드 
     useEffect(() => {
         const storedBookmarks = JSON.parse(localStorage.getItem('bookmark')||'[]')
         setBookmarks(storedBookmarks)
     }, [])
 
-    useEffect(() => {
-        localStorage.setItem('bookmark', JSON.stringify(bookmarks))
-    }, [bookmarks])
+    // 북마크가 업데이트될 때 로컬 스토리지에 저장 
+    // useEffect(() => {
+    //     localStorage.setItem('bookmark', JSON.stringify(bookmarks))
+    // }, [bookmarks])
     
     // 다이얼로그 끄기 
     const closeDialog = () => {
@@ -42,14 +45,32 @@ function DetailDialog({data, handleDialog}: Props) {
     }, [])
                     
     // 북마크 추가 이벤트 
-    const addBookmark = async (selected: CardDTO) => {
+    const toggleBookmark = async (selected: CardDTO) => {
         const userEmail = localStorage.getItem('userEmail'); 
+        
         const isBookmarked = bookmarks.find(item => item.imageId === selected.id); 
-        console.log(`Is Bookmarked: ${isBookmarked ? 'true' : 'false'}`); 
+        
         if(isBookmarked) {
-            toast.info('해당 이미지는 이미 추가되어 있습니다.'); 
-            return; 
-        }
+
+            try {
+                const response = await fetch(`http://localhost:80/bookmark/${selected.id}`, {
+                    method: 'DELETE',
+                })
+
+                if( !response.ok ) {
+                    const errorData = await response.json()
+                    throw new Error(errorData.message || '북마크 삭제 실패')
+                }
+                
+                const updatedBookmarks = bookmarks.filter(item => item.imageId !== selected.id)
+                setBookmarks(updatedBookmarks)
+                localStorage.setItem('bookmark', JSON.stringify(updatedBookmarks))
+                toast.info('북마크에서 삭제되었습니다.')
+
+            } catch (error) {
+                console.error('Error : ', error)
+            }
+        } else {
 
         try {
             const {id, urls, user, width, height, created_at, updated_at, likes} = selected; 
@@ -67,6 +88,7 @@ function DetailDialog({data, handleDialog}: Props) {
                 likes: likes
             }
 
+            // DB에 저장 
             const response = await fetch('http://localhost:80/bookmark', {
                 method: 'POST', 
                 headers: {
@@ -81,12 +103,14 @@ function DetailDialog({data, handleDialog}: Props) {
             }
 
             const updatedBookmarks = [...bookmarks, bookmarkData]; 
-            console.log(updatedBookmarks)
             setBookmarks(updatedBookmarks)
             localStorage.setItem('bookmark', JSON.stringify(updatedBookmarks));  
+            
             toast.info('이미지를 북마크에 저장하였습니다. 😘'); 
+
         } catch (error) {
             console.error('Error : ', error);
+        }
         }
     }
 
@@ -103,7 +127,7 @@ function DetailDialog({data, handleDialog}: Props) {
                     <span className={styles.close__authorName}>{data.user.name}</span>
                 </div>
                 <div className={styles.bookmark}>
-                        <button className={styles.bookmark__button} onClick={() => addBookmark(data)}>
+                        <button className={styles.bookmark__button} onClick={() => toggleBookmark(data)}>
                             <span className='material-symbols-outlined' style={{ fontSize: '16px', color: bookmarks.some(item => item.imageId === data.id) ? 'red' : 'black' }}>
                                 favorite
                             </span>

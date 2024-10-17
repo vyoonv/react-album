@@ -33,6 +33,9 @@ public class BookmarkController {
 							.authorName(bookmarkRequest.getAuthorName())
 							.width(bookmarkRequest.getWidth())
 							.height(bookmarkRequest.getHeight())
+							.createdAt(bookmarkRequest.getCreatedAt())
+							.updatedAt(bookmarkRequest.getUpdatedAt())
+							.likes(bookmarkRequest.getLikes())
 							.userNo(userNo)
 							.build(); 
 		

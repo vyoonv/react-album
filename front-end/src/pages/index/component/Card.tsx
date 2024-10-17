@@ -15,7 +15,7 @@ function Card({data, handleDialog, handleSetData}: Props) {
         handleSetData(data)
     }
 
-    const imageUrl = data.urls?.small || data.url;
+    const imageUrl = data.urls?.small || data.urls;
 
     return (
         <div className={Styles.card} onClick={openDialog}>

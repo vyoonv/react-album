@@ -19,7 +19,10 @@
 			#{imageUrl}, 
 			#{authorName}, 
 			#{width}, 
-			#{height}
+			#{height},
+			TO_DATE(#{createdAt}, 'YYYY-MM-DD HH24:MI:SS'),
+    		TO_DATE(#{updatedAt}, 'YYYY-MM-DD HH24:MI:SS'),
+			#{likes}
 		)
 	</insert>
 

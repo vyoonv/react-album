@@ -18,8 +18,14 @@ export interface CardDTO {
     topic_submissions: any
     updated_at: string
     urls: Url
-    user: any
+    user: User
     width: number
+
+    // 북마크 
+    imageId: string
+    imageUrl: string
+    authorName: string
+    
 }
 
 interface Link {
@@ -50,4 +56,14 @@ interface Url {
     small: string
     small_s3: string
     thumb: string
+}
+
+interface User {
+    id: string
+    name: string
+    profile_image: {
+        small: string
+        medium: string
+        large: string
+    }
 }

@@ -4,6 +4,7 @@ import styles from './DetailDialog.module.scss'
 import { toast } from 'react-toastify';
 import { bookmarkState } from '../../../store/atoms/bookmark';
 import { useRecoilState } from 'recoil';
+import { timeStamp } from 'console';
 
 interface Props {
     data: CardDTO
@@ -42,7 +43,9 @@ function DetailDialog({data, handleDialog}: Props) {
         }
 
         try {
-            const {id, urls, user, width, height} = selected; 
+            const {id, urls, user, width, height, created_at, updated_at, likes} = selected; 
+            const createdAt = created_at.split('T').join(' ').slice(0,18)
+            const updatedAt = updated_at.split('T').join(' ').slice(0,18)
             const bookmarkData = {
                 imageId: id, 
                 imageUrl: urls.small, 
@@ -50,6 +53,9 @@ function DetailDialog({data, handleDialog}: Props) {
                 width, 
                 height, 
                 userEmail,
+                createdAt,
+                updatedAt, 
+                likes: likes
             }
 
             const response = await fetch('http://localhost:80/bookmark', {

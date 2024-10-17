@@ -25,5 +25,8 @@ public class Bookmark {
 	private String authorName; 
 	private int width;
 	private int height;
+	private String createdAt; 
+	private String updatedAt; 
+	private int likes; 
 
 }

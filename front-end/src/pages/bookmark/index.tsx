@@ -27,7 +27,7 @@ function index() {
             {data.length === 0 ? 
             <div className={styles.page__contents__noData}>조회 가능한 데이터가 없습니다.</div> : (
                 data.map((item: CardDTO) => {
-                return <Card prop={item} key={item.id}/>
+                return <Card prop={item} key={item.imageId}/>
             }))} 
             
         </main>

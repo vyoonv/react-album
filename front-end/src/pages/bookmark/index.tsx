@@ -9,9 +9,7 @@ function index() {
     const [data, setData] = useState<CardDTO[]>([])
     const getData = () => {
         const getLocalStorage = JSON.parse(localStorage.getItem('bookmark') || '[]')
-
-        if(getLocalStorage && getLocalStorage.length > 0) setData(getLocalStorage)
-        else setData([])
+        setData(getLocalStorage)
     }
 
     useEffect( () => {

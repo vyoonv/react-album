@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react'
 import { CardDTO, Tag } from '../../../pages/index/types/card'
 import styles from './DetailDialog.module.scss'
 import { toast } from 'react-toastify';
-import { bookmarkState } from '../../../store/atoms/bookmark';
+import { bookmarkState } from '../../../store/atoms/bookmarkState';
 import { useRecoilState } from 'recoil';
-import { timeStamp } from 'console';
 
 interface Props {
     data: CardDTO
@@ -14,6 +13,15 @@ interface Props {
 function DetailDialog({data, handleDialog}: Props) {
     
     const [bookmarks, setBookmarks] = useRecoilState(bookmarkState); 
+
+    useEffect(() => {
+        const storedBookmarks = JSON.parse(localStorage.getItem('bookmark')||'[]')
+        setBookmarks(storedBookmarks)
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('bookmark', JSON.stringify(bookmarks))
+    }, [bookmarks])
     
     // 다이얼로그 끄기 
     const closeDialog = () => {
@@ -36,7 +44,8 @@ function DetailDialog({data, handleDialog}: Props) {
     // 북마크 추가 이벤트 
     const addBookmark = async (selected: CardDTO) => {
         const userEmail = localStorage.getItem('userEmail'); 
-        const isBookmarked = bookmarks.find(item => item.id === selected.id); 
+        const isBookmarked = bookmarks.find(item => item.imageId === selected.id); 
+        console.log(`Is Bookmarked: ${isBookmarked ? 'true' : 'false'}`); 
         if(isBookmarked) {
             toast.info('해당 이미지는 이미 추가되어 있습니다.'); 
             return; 
@@ -72,14 +81,15 @@ function DetailDialog({data, handleDialog}: Props) {
             }
 
             const updatedBookmarks = [...bookmarks, bookmarkData]; 
-            setBookmarks(updatedBookmarks);
+            console.log(updatedBookmarks)
+            setBookmarks(updatedBookmarks)
             localStorage.setItem('bookmark', JSON.stringify(updatedBookmarks));  
             toast.info('이미지를 북마크에 저장하였습니다. 😘'); 
         } catch (error) {
             console.error('Error : ', error);
         }
     }
-                    
+
     return (
     <div className={styles.container} onClick={closeDialog}>
         <div className={styles.container__dialog}>
@@ -94,7 +104,7 @@ function DetailDialog({data, handleDialog}: Props) {
                 </div>
                 <div className={styles.bookmark}>
                         <button className={styles.bookmark__button} onClick={() => addBookmark(data)}>
-                            <span className='material-symbols-outlined' style={{ fontSize: '16px', color: bookmarks.some(item => item.id === data.id) ? 'red' : 'black' }}>
+                            <span className='material-symbols-outlined' style={{ fontSize: '16px', color: bookmarks.some(item => item.imageId === data.id) ? 'red' : 'black' }}>
                                 favorite
                             </span>
                         </button>

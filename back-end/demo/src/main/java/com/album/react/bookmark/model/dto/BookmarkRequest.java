@@ -16,9 +16,10 @@ import lombok.ToString;
 public class BookmarkRequest {
 	
 	private String userEmail; 
-	private String imageUrl;
-	private int photoNo; 
+	private String imageId; 
+	private String imageUrl; 
+	private String authorName; 
+	private int width; 
+	private int height; 
 
-	private ImageDetails image;
-	private Bookmark bookmark; 
 }

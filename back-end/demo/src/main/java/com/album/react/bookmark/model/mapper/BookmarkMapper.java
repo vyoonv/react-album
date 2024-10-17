@@ -10,11 +10,11 @@ public interface BookmarkMapper {
 	/** 이메일로 userNo 넘겨받기 
 	 * @param userEmail
 	 */
-	int getUserNoByEmail(String userEmail);
+	public Integer getUserNoByEmail(String userEmail);
 
 	/** 북마크 추가하기 
 	 * @param bookmark
 	 */
-	void insertBookmark(Bookmark bookmark);
+	void addBookmark(Bookmark bookmark);
 
 }

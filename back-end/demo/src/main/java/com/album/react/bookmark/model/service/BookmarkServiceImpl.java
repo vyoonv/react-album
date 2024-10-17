@@ -16,7 +16,7 @@ public class BookmarkServiceImpl implements BookmarkService {
 	@Override
 	public void addBookmark(Bookmark bookmark) {
 		
-		mapper.insertBookmark(bookmark); 
+		mapper.addBookmark(bookmark); 
 		
 	}
 

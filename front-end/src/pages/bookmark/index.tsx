@@ -18,15 +18,7 @@ function index() {
         getData()
     }, [])
 
-    // 이미지 소스에 따라 카드 렌더링 처리 다르게 
-    const renderCard = (item: CardDTO) => {
-        if(item.source === 'unsplash') return <Card prop={item} key={item.id}/>
-        else if(item.source === 'user_upload') return <Card prop={item} key={item.id}/>
-    }
-
   return (
-
-
 
     <div className={styles.page}>
         <CommonHeader />

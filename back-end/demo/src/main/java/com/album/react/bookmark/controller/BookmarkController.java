@@ -21,31 +21,22 @@ public class BookmarkController {
 	private final BookmarkService service; 
 	
 	@PostMapping("/bookmark")
-	public ResponseEntity<String> addBookmark( @RequestBody Bookmark bookmarkRequest,
+	public ResponseEntity<String> addBookmark( @RequestBody BookmarkRequest bookmarkRequest,
 												HttpServletRequest request) {
 		
-		String userEmail = (String) request.getAttribute("userEmail"); 
-		
-		if(userEmail == null || userEmail.isEmpty() ) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다."); 
-		}
-		
+		String userEmail = bookmarkRequest.getUserEmail();
 		int userNo = service.getUserNoByEmail(userEmail); // 사용자 메일 받아온 거 userNo로 넘기기 
 		
-		if(userNo == 0) {
-
-			return ResponseEntity.badRequest().body("사용자를 찾을 수 없습니다."); 
-			
-		}
-
-		Bookmark bookmark = new Bookmark(); 
-		bookmark.setUserNo(userNo); 
-		bookmark.setImageId(bookmarkRequest.getImageId()); 
-		bookmark.setImageUrl(bookmarkRequest.getImageUrl()); 
-		bookmark.setAuthorName(bookmarkRequest.getAuthorName()); 
-		bookmark.setHeight(bookmarkRequest.getHeight()); 
-		bookmark.setWidth(bookmarkRequest.getWidth()); 
+		Bookmark bookmark = Bookmark.builder()
+							.imageId(bookmarkRequest.getImageId())
+							.imageUrl(bookmarkRequest.getImageUrl())
+							.authorName(bookmarkRequest.getAuthorName())
+							.width(bookmarkRequest.getWidth())
+							.height(bookmarkRequest.getHeight())
+							.userNo(userNo)
+							.build(); 
 		
+		service.addBookmark(bookmark); 
 		
 		return ResponseEntity.ok("북마크가 추가되었습니다."); 
 		

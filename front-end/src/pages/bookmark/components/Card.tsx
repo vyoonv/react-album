@@ -6,6 +6,9 @@ interface Props {
 }
 
 function Card({ prop }: Props) {
+
+  if(!prop.urls) return null; 
+  
   return (
     <div className={styles.card}>
         <div className={styles.card__imageBox}>

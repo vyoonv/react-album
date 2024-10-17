@@ -19,12 +19,9 @@ function CommonHeader() {
       // console.log('profile :: ', profile); 
 
       // 사용자 정보를 로컬 스토리지에 저장 
-      localStorage.setItem('user', JSON.stringify({
-        name: profile.name, 
-        email: profile.email,
-        userProfile: profile.picture, 
-      }) );
+      localStorage.setItem('storedUser', JSON.stringify({ name: profile.name, email: profile.email }));
 
+      // recoil 상태 업데이트 
       setUser({ name: profile.name, email: profile.email });
       setIsLoggedIn(true);
 
@@ -85,17 +82,18 @@ function CommonHeader() {
 
   // 로그인 유지 
   useEffect( () => {
-    const storedUser = localStorage.getItem('user'); 
-    if(storedUser) {
-      const parsedser = JSON.parse(storedUser); 
-      setUser(parsedser); 
-      setIsLoggedIn(true); 
+    const storedUser = localStorage.getItem('storedUser');
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+      setIsLoggedIn(true);
     }
+    
   }, [])
 
   // 로그아웃 
   const handleLogout = () => {
-    localStorage.removeItem('user'); 
+    localStorage.removeItem('storedUser'); 
     setUser({ name: '', email: '' }); 
     setIsLoggedIn(false); 
     navigate('/');

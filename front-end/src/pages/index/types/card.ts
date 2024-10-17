@@ -17,16 +17,8 @@ export interface CardDTO {
     tags: Tag[]
     topic_submissions: any
     updated_at: string
-    //urls: Url
-    //user: any
-    urls?: { 
-        small: string;
-        regular: string;
-      };
-    url?: string;  // 사용자 업로드 이미지용
-    user?: { name: string };  // Unsplash 이미지용
-    uploader?: string;  // 사용자 업로드 이미지용
-    source: 'unsplash' | 'user_upload';
+    urls: Url
+    user: any
     width: number
 }
 

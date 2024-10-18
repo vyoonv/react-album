@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { CardDTO, Tag } from '../../../pages/index/types/card'
 import styles from './DetailDialog.module.scss'
 import { toast } from 'react-toastify';
-import { bookmarkState } from '../../../store/atoms/bookmarkState';
+import { bookmarkState } from '../../../stores/atoms/bookmarkState';
 import { useRecoilState } from 'recoil';
 import { totalmem } from 'os';
 

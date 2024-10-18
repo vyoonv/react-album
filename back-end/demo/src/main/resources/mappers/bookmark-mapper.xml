@@ -26,6 +26,7 @@
 		)
 	</insert>
 	
+	<!--  북마크 삭제하기 -->
 	<delete id="deleteBookmark">
 		DELETE FROM BOOKMARK
 		WHERE IMAGE_ID = #{imageId}

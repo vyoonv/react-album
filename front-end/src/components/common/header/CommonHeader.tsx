@@ -3,7 +3,7 @@ import styles from './CommonHeader.module.scss'
 import { useEffect, useState } from 'react'
 import { GoogleOAuthProvider, GoogleLogin, CredentialResponse } from '@react-oauth/google'
 import { useRecoilState } from 'recoil';
-import { userState } from '../../../store/atoms/userState'
+import { userState } from '../../../stores/atoms/userState'
 
 function CommonHeader() {
 

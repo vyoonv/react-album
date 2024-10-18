@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.album.react.user.model.mapper.UserMapper">
 
+	<!-- 구글 로그인한 유저 등록하기 -->
 	<insert id="saveUser">
 	INSERT INTO USERS VALUES (
 		SEQ_USER.NEXTVAL,
@@ -13,6 +14,7 @@
 	)
 	</insert>
 	
+	<!-- 구글 로그인 시 등록된 회원인지 확인 -->
 	<select id="userExists">
 		SELECT COUNT(*)
 		FROM USERS 

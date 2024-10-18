@@ -3,8 +3,8 @@ import { Link, useLocation } from 'react-router-dom'
 import navJason from './nav.json'
 import styles from './CommonNav.module.scss'
 import { useRecoilState } from 'recoil'
-import { pageState } from '../../../store/atoms/pageState'
-import { searchState } from '../../../store/atoms/searchState'
+import { pageState } from '../../../stores/atoms/pageState'
+import { searchState } from '../../../stores/atoms/searchState'
 
 
 interface Navigation {

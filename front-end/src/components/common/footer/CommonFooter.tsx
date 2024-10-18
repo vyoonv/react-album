@@ -1,9 +1,9 @@
 import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil'
 import styles from './CommonFooter.module.scss'
-import { imageData } from '../../../store/selectors/imageSelector'
-import { pageState } from '../../../store/atoms/pageState'
+import { imageData } from '../../../stores/selectors/imageSelector'
+import { pageState } from '../../../stores/atoms/pageState'
 import { useEffect, useState } from 'react'
-import { searchState } from '../../../store/atoms/searchState'
+import { searchState } from '../../../stores/atoms/searchState'
 
 function CommonFooter() {
   const imgSelector = useRecoilValueLoadable(imageData)

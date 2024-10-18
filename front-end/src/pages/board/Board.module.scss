@@ -1,0 +1,100 @@
+.boardListItem {
+  display: flex;
+  align-items: center;
+  padding: 24px;
+  gap: 30px;
+
+  background-color: rgba(255, 255, 255, 1);
+
+  cursor: pointer;
+
+  &__mainBox {
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+    flex: 1;
+
+    &__top {
+      display: flex;
+      align-items: center;
+
+      gap: 8px;
+
+      &__profileBox {
+        width: 32px;
+        height: 32px;
+
+        &__profileImg {
+          width: 100%;
+          height: 100%;
+
+          border-radius: 50% 50%;
+
+          background-position: 50% 50%;
+          background-size: 100% 100%;
+        }
+      }
+      &__writeBox {
+        display: flex;
+        flex-direction: column;
+
+        gap: 2px;
+
+        &nickName {
+          color: $color-gray-500;
+          font-size: 12px;
+          font-weight: 500;
+          line-height: 140%;
+        }
+        &__writeDate {
+          color: $color-gray-000;
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 140%;
+        }
+      }
+    }
+    &__mid {
+      display: flex;
+      flex-direction: column;
+
+      gap: 5px;
+
+      &__title {
+        color: $color-gray-800;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 140%;
+      }
+      &__content {
+        color: $color-gray-600;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 140%;
+      }
+    }
+    &__bot {
+      &__counts {
+        color: $color-gray-600;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 140%;
+      }
+    }
+  }
+  &__imageBox {
+    width: 152px;
+    height: 152px;
+
+    &__image {
+      width: 100%;
+      height: 100%;
+
+      border-radius: 10px;
+
+      background-position: 50% 50%;
+      background-size: 100% 100%;
+    }
+  }
+}

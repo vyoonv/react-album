@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useRecoilValue, useRecoilValueLoadable } from 'recoil'
-import { imageData } from '../../store/selectors/imageSelector'
+import { imageData } from '../../stores/selectors/imageSelector'
 import CommonHeader from '../../components/common/header/CommonHeader'
 import CommonNav from '../../components/common/navigation/CommonNav'
 import CommonSearchBar from '../../components/common/searchBar/CommonSearchBar'
@@ -11,7 +11,7 @@ import Loading from './component/Loading'
 // css
 import styles from './styles/index.module.scss'
 import { CardDTO } from './types/card'
-import { userState } from '../../store/atoms/userState'
+import { userState } from '../../stores/atoms/userState'
 
 
 function index() {

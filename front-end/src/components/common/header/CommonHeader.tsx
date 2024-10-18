@@ -103,6 +103,7 @@ function CommonHeader() {
   const moveToPage = (filter: string) => {
     if(filter === 'main') navigate('/')
     if(filter === 'bookmark') navigate('/bookmark')  
+    if(filter === 'board') navigate('/board')  
   }
 
   return (
@@ -115,8 +116,8 @@ function CommonHeader() {
           <div className={styles.header__profileBox}>
             {isLoggedIn ? (
               <>
-              <button className={styles.header__profileBox__button}>업로드</button>
               <button className={styles.header__profileBox__button} onClick={() => moveToPage('bookmark')}>북마크</button>
+              <button className={styles.header__profileBox__button} onClick={() => moveToPage('board')}>게시판</button>
               <span className={styles.header__profileBox__userName}>{user.name} | {user.email}</span>
               <button className={styles.header__profileBox__button} onClick={handleLogout}>로그아웃</button>
               </>

@@ -18,6 +18,7 @@ function BoardItem({ boardItem }: Props) {
           <div className={styles.boardListItem__mainBox__top__profileBox}>
             <div className={styles.boardListItem__mainBox__top__profileImg}>
               {writerProfileImg}
+              <img src="../assets/images/image-logo.png" />
             </div>
           </div>
           <div className={styles.boardListItem__mainBox__writeBox}>
@@ -43,12 +44,11 @@ function BoardItem({ boardItem }: Props) {
           </div>
         </div>
       </div>
-        {boardImg !== null && (
-
-        )}
+      {boardImg !== null && (
         <div className={styles.boardListItem__imageBox}>
-        <div className={styles.boardListItem__imageBox__image}></div>
-      </div>
+          <div className={styles.boardListItem__imageBox__image}></div>
+        </div>
+      )}
     </div>
   );
 }

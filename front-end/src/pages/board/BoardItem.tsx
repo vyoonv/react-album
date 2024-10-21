@@ -1,7 +1,7 @@
 import Board from "../index/types/board";
 import styles from "./Board.module.scss";
 
-interface props {
+interface Props {
   boardItem: Board;
 }
 
@@ -18,7 +18,6 @@ function BoardItem({ boardItem }: Props) {
           <div className={styles.boardListItem__mainBox__top__profileBox}>
             <div className={styles.boardListItem__mainBox__top__profileImg}>
               {writerProfileImg}
-              <img src="../assets/images/image-logo.png" />
             </div>
           </div>
           <div className={styles.boardListItem__mainBox__writeBox}>

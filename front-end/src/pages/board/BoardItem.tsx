@@ -1,5 +1,7 @@
+import { useNavigate } from "react-router-dom";
 import Board from "../index/types/board";
 import styles from "./Board.module.scss";
+import DefaultProfileImage from "../../assets/images/image-logo.png";
 
 interface Props {
   boardItem: Board;
@@ -11,14 +13,25 @@ function BoardItem({ boardItem }: Props) {
   const { likeCount, commentCount, viewCount } = boardItem;
   const { writeDate, writerName, writerProfileImg } = boardItem;
 
+  const navigator = useNavigate();
+
+  const onClickHandler = () => {
+    navigator(boardNo);
+  };
+
   return (
     <div className={styles.boardListItem}>
       <div className={styles.boardListItem__mainBox}>
         <div className={styles.boardListItem__mainBox__top}>
           <div className={styles.boardListItem__mainBox__top__profileBox}>
-            <div className={styles.boardListItem__mainBox__top__profileImg}>
-              {writerProfileImg}
-            </div>
+            <div
+              className={styles.boardListItem__mainBox__top__profileImg}
+              style={{
+                backgroundImage: `url(${
+                  writerProfileImg ? writerProfileImg : DefaultProfileImage
+                })`,
+              }}
+            ></div>
           </div>
           <div className={styles.boardListItem__mainBox__writeBox}>
             <div className={styles.boardListItem__mainBox__writeBox__nickName}>

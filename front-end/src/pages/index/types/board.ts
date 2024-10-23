@@ -7,6 +7,6 @@ export default interface Board {
   viewCount: number;
   writeDate: string;
   writerName: string;
-  writerProfileImg: string;
-  boardImg: string;
+  writerProfileImg: string | null;
+  boardImg: string | null;
 }

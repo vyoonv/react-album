@@ -63,7 +63,14 @@ function BoardItem({ boardItem }: Props) {
       </div>
       {boardImg !== null && (
         <div className={styles.boardListItem__imageBox}>
-          <div className={styles.boardListItem__imageBox__image}></div>
+          <div
+            className={styles.boardListItem__imageBox__image}
+            style={{
+              backgroundImage: `url(${
+                boardImg ? boardImg : DefaultProfileImage
+              })`,
+            }}
+          ></div>
         </div>
       )}
     </div>

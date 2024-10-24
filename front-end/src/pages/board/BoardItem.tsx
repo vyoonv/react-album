@@ -12,10 +12,6 @@ function BoardItem({ boardItem }: Props) {
   const { boardNo, boardTitle, boardContent, boardImg } = boardItem;
   const { likeCount, commentCount, viewCount } = boardItem;
   const { writeDate, writerName, writerProfileImg } = boardItem;
-  console.log("Writer Profile Image URL:", writerProfileImg);
-  console.log("Default Profile Image URL:", DefaultProfileImage);
-  console.log("Board Image URL:", boardImg);
-
   const navigator = useNavigate();
 
   const onClickHandler = () => {

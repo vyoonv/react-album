@@ -6,9 +6,10 @@
 
 ### 기능 
 - Google cloud 활용한 간편 로그인 기능
-  
+  ![로그인](https://github.com/vyoonv/react-album/blob/ad2d87262209409c2c3cf9cc330c47bf8e42cf3a/YoonSplash%20(1).png)
 - 검색어 입력을 통한 이미지 검색
-- 카테고리별 이미지 검색
+  ![ㄱㅓㅁ색](https://github.com/vyoonv/react-album/blob/ad2d87262209409c2c3cf9cc330c47bf8e42cf3a/YoonSplash%20(5).png)
 - 이미지 북마크
+  ![ㅂㅜㄱ마크](https://github.com/vyoonv/react-album/blob/ad2d87262209409c2c3cf9cc330c47bf8e42cf3a/YoonSplash%20(4).png)
 - 게시판
   ![ㄱㅔ시판](https://github.com/vyoonv/react-album/blob/5d73f8db3a117bc4f6b4673d1a9dd815e1f731e4/YoonSplash%20(9).png)

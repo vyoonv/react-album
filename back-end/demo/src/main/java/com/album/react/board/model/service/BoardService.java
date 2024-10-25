@@ -8,6 +8,6 @@ public interface BoardService {
 	 * @param board
 	 * @return
 	 */
-	Board uploadPost(Board board);
+	void uploadPost(Board board);
 
 }

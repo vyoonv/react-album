@@ -32,9 +32,13 @@ public class BoardController {
 		
 		board.setUserNo(userNo);
 		
-		Board saveBoard = service.uploadPost(board);
+		service.uploadPost(board);
 		
 		// 게시물 조회 시 userEmail, writerName, writerProfileImg
+		Board saveBoard = new Board(); 
+		saveBoard.setBoardTitle(board.getBoardTitle());
+		saveBoard.setBoardContent(board.getBoardContent());
+		saveBoard.setUserNo(userNo);
 		saveBoard.setWriterName(userService.getUserName(userNo));
 		saveBoard.setWriterProfileImg(userService.getUserProfileImg(userNo));
 		saveBoard.setUserEmail(board.getUserEmail());

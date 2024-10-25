@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.album.react.board.model.mapper.BoardMapper">
 
-	<insert id="uploadPost">
+	<insert id="uploadPost" parameterType="com.album.react.board.model.dto.Board">
 		INSERT INTO BOARD VALUES (
 			SEQ_BOARD.NEXTVAL, 
 			#{boardTitle},

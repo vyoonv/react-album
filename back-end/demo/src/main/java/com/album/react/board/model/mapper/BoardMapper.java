@@ -11,6 +11,6 @@ public interface BoardMapper {
 	 * @param board
 	 * @return
 	 */
-	Board uploadPost(Board board);
+	void uploadPost(Board board);
 
 }

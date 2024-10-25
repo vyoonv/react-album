@@ -23,6 +23,7 @@ public class Board {
 	private String writeDate; 
 	private int likeCount; 
 	private int viewCount; 
+	private int commentCount;
 	
 	private int userNo; 
 	private String writerName; 

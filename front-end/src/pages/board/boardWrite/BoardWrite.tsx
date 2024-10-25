@@ -34,7 +34,7 @@ function BoardWrite() {
       userEmail: user.email,
     };
 
-    fetch("http://localhost:5173/board", {
+    fetch("http://localhost:80/board", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

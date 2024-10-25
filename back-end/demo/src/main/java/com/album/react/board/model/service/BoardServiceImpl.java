@@ -15,9 +15,9 @@ public class BoardServiceImpl implements BoardService{
 	
 
 	@Override
-	public Board uploadPost(Board board) {
+	public void uploadPost(Board board) {
 		
-		return mapper.uploadPost(board);
+		mapper.uploadPost(board);
 	}
 
 }

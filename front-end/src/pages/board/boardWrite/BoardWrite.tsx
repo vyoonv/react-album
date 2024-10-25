@@ -54,6 +54,11 @@ function BoardWrite() {
       .catch((error) => console.error("error : ", error));
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0] || null;
+    setBoardImg(file);
+  };
+
   return (
     <form className={styles.boardWriteForm} onSubmit={handleSubmit}>
       <h3 className={styles.boardWriteForm__title}>글쓰기</h3>
@@ -71,6 +76,18 @@ function BoardWrite() {
         />
       </div>
       <div className={styles.boardWriteForm__form}>
+        <label htmlFor="image" className={styles.label}>
+          이미지 첨부:
+        </label>
+        <input
+          id="image"
+          type="file"
+          className={styles.fileInput}
+          accept="image/*"
+          onChange={handleFileChange}
+        />
+      </div>
+      <div className={styles.boardWriteForm__form}>
         <label htmlFor="content" className={styles.label}>
           내용 :{" "}
         </label>
@@ -84,6 +101,13 @@ function BoardWrite() {
       </div>
       <button type="submit" className={styles.button}>
         제출
+      </button>
+      <button
+        type="button"
+        className={styles.button}
+        onClick={() => navigate("/board")}
+      >
+        목록으로
       </button>
     </form>
   );

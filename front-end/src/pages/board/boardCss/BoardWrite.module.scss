@@ -2,8 +2,10 @@
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
+
   border: 1px solid #ccc;
   border-radius: 8px;
+
   background-color: #f9f9f9;
 
   &__title {
@@ -24,8 +26,10 @@
 .textarea {
   width: 100%;
   padding: 10px;
+
   border: 1px solid #ccc;
   border-radius: 4px;
+
   font-size: 16px;
 }
 
@@ -35,15 +39,19 @@
 }
 
 .button {
-  background-color: #007bff;
-  color: $color-white-000;
-  border: none;
+  border: 1px solid $color-white-000;
   border-radius: 4px;
+
   padding: 10px 15px;
+
+  color: $color-white-000;
+  background-color: $color-indigo-300;
+
   cursor: pointer;
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: $color-white-000;
+    color: $color-black-900;
   }
 }

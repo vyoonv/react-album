@@ -27,5 +27,6 @@ public class Board {
 	private int userNo; 
 	private String writerName; 
 	private String writerProfileImg; 
+	private String userEmail; 
 
 }

@@ -23,7 +23,6 @@ function BoardWrite() {
     }
 
     const newBoardItem: Board = {
-      boardNo: 1,
       boardTitle,
       boardContent,
       likeCount: 0,
@@ -32,6 +31,7 @@ function BoardWrite() {
       writerName: user.name,
       writerProfileImg: user.profileImg,
       boardImg: null,
+      userEmail: user.email,
     };
 
     fetch("http://localhost:5173/board", {

@@ -20,5 +20,23 @@
 		FROM USERS 
 		WHERE USER_EMAIL = #{userEmail}
 	</select>
-
+	
+	<select id="getUserNo">
+		SELECT USER_NO
+		FROM USERS 
+		WHERE USER_EMAIL = #{userEmail}
+	</select>
+	
+	<select id="getUserName">
+		SELECT USER_NAME
+		FROM USERS 
+		WHERE USER_NO = #{userNo}
+	</select>
+	
+	<select id="getUserProfileImg">
+		SELECT USER_PROFILE
+		FROM USERS 
+		WHERE USER_NO = #{userNo}
+	</select>
+	
 </mapper>

@@ -9,4 +9,5 @@ export default interface Board {
   writerName: string;
   writerProfileImg: string | null;
   boardImg: string | null;
+  userEmail: string;
 }

@@ -18,4 +18,22 @@ public interface UserMapper {
 	 */
 	int userExists(String userEmail);
 
+	/** userEmail로 userNo 가져오기
+	 * @param userEmail
+	 * @return
+	 */
+	int getUserNo(String userEmail);
+
+	/** userName 가져오기 
+	 * @param userNo
+	 * @return
+	 */
+	String getUserName(Integer userNo);
+
+	/** profileImg 가져오기 
+	 * @param userNo
+	 * @return
+	 */
+	String getUserProfileImg(Integer userNo);
+
 }

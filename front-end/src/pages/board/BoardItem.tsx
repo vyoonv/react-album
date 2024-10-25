@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Board from "../index/types/board";
 import styles from "./Board.module.scss";
-import DefaultProfileImage from "../../assets/images/defaultProfile.jpg";
+import defaultImage from "../../assets/images/defaultProfile.jpg";
 
 interface Props {
   boardItem: Board;
@@ -13,6 +13,11 @@ function BoardItem({ boardItem }: Props) {
   const { likeCount, commentCount, viewCount } = boardItem;
   const { writeDate, writerName, writerProfileImg } = boardItem;
   const navigator = useNavigate();
+
+  const defaultProfileImage =
+    "https://i.namu.wiki/i/M0j6sykCciGaZJ8yW0CMumUigNAFS8Z-dJA9h_GKYSmqqYSQyqJq8D8xSg3qAz2htlsPQfyHZZMmAbPV-Ml9UA.webp";
+  const defaultImage =
+    "https://www.lisa.or.kr/assets/user/images/menu07/no_img.gif";
 
   const onClickHandler = () => {
     navigator(boardNo);
@@ -29,7 +34,7 @@ function BoardItem({ boardItem }: Props) {
               }
               style={{
                 backgroundImage: `url(${
-                  writerProfileImg ? writerProfileImg : DefaultProfileImage
+                  writerProfileImg ? writerProfileImg : defaultProfileImage
                 })`,
               }}
             ></div>
@@ -62,9 +67,7 @@ function BoardItem({ boardItem }: Props) {
           <div
             className={styles.boardListItem__imageBox__image}
             style={{
-              backgroundImage: `url(${
-                boardImg ? boardImg : DefaultProfileImage
-              })`,
+              backgroundImage: `url(${boardImg ? boardImg : defaultImage})`,
             }}
           ></div>
         </div>

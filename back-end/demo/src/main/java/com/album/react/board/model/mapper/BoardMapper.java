@@ -1,5 +1,7 @@
 package com.album.react.board.model.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.album.react.board.model.dto.Board;
@@ -12,5 +14,10 @@ public interface BoardMapper {
 	 * @return
 	 */
 	void uploadPost(Board board);
+
+	/**
+	 *  게시판 리스트 가져오기 
+	 */
+	List<Board> getBoardList();
 
 }

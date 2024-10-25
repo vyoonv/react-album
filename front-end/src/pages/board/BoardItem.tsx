@@ -9,9 +9,20 @@ interface Props {
 
 function BoardItem({ boardItem }: Props) {
   // properties
-  const { boardNo, boardTitle, boardContent, boardImg } = boardItem;
-  const { likeCount, commentCount, viewCount } = boardItem;
-  const { writeDate, writerName, writerProfileImg } = boardItem;
+  // BoardItem.tsx
+  const {
+    boardNo,
+    boardTitle,
+    boardContent,
+    boardImg,
+    writeDate,
+    writerName,
+    writerProfileImg,
+    commentCount,
+    likeCount,
+    viewCount,
+  } = boardItem;
+
   const navigator = useNavigate();
 
   const defaultProfileImage =

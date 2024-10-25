@@ -2,7 +2,7 @@ import Board from "../index/types/board";
 
 export const latestBoardListMock: Board[] = [
   {
-    boardNo: 1,
+    boardNo: 100,
     boardTitle: "문의드립니다",
     boardContent: "문의 내용입니다.",
     likeCount: 1,
@@ -16,7 +16,7 @@ export const latestBoardListMock: Board[] = [
       "https://cdn.pixabay.com/photo/2024/05/29/16/49/lizard-8796682_640.jpg",
   },
   {
-    boardNo: 2,
+    boardNo: 101,
     boardTitle: "문의드립니다",
     boardContent: "문의 내용입니다.",
     likeCount: 1,
@@ -29,7 +29,7 @@ export const latestBoardListMock: Board[] = [
     boardImg: "",
   },
   {
-    boardNo: 3,
+    boardNo: 103,
     boardTitle: "문의드립니다",
     boardContent: "문의 내용입니다.",
     likeCount: 1,
@@ -42,7 +42,7 @@ export const latestBoardListMock: Board[] = [
     boardImg: "",
   },
   {
-    boardNo: 4,
+    boardNo: 104,
     boardTitle: "문의드립니다",
     boardContent: "문의 내용입니다.",
     likeCount: 1,
@@ -56,7 +56,7 @@ export const latestBoardListMock: Board[] = [
       "https://images.unsplash.com/photo-1500835556837-99ac94a94552?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NjEzNzd8MHwxfHNlYXJjaHwyfHx0cmF2ZWx8ZW58MHx8fHwxNzI5ODIxNzk0fDA&ixlib=rb-4.0.3&q=80&w=400",
   },
   {
-    boardNo: 4,
+    boardNo: 105,
     boardTitle: "문의드립니다",
     boardContent: "문의 내용입니다.",
     likeCount: 1,

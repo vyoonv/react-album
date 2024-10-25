@@ -1,8 +1,11 @@
 package com.album.react.board.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +25,16 @@ public class BoardController {
 	private final BoardService service; 
 	private final UserService userService; 
 	
+	@GetMapping("/boardList")
+	public ResponseEntity<List<Board>> getBoardList() {
+		List<Board> boards = service.getBoardList(); 
+		return ResponseEntity.ok(boards); 
+	}
+	
+	/** 포스트 업로드하기 
+	 * @param board
+	 * @return
+	 */
 	@PostMapping
 	public ResponseEntity<Board> uploadPost(@RequestBody Board board) {
 		

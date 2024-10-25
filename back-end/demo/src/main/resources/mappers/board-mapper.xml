@@ -15,5 +15,9 @@
 		)
 	</insert>
 	
+	<select id="getBoardList">
+	 	SELECT * FROM BOARD 
+	</select>
+	
 
 </mapper>

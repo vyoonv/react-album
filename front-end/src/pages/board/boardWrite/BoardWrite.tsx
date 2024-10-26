@@ -60,56 +60,60 @@ function BoardWrite() {
   };
 
   return (
-    <form className={styles.boardWriteForm} onSubmit={handleSubmit}>
-      <h3 className={styles.boardWriteForm__title}>글쓰기</h3>
-      <div className={styles.boardWriteForm__form}>
-        <label htmlFor="title" className={styles.label}>
-          제목 :
-        </label>
-        <input
-          id="title"
-          type="text"
-          className={styles.input}
-          value={boardTitle}
-          onChange={(e) => setBoardTitle(e.target.value)}
-          required
-        />
-      </div>
-      <div className={styles.boardWriteForm__form}>
-        <label htmlFor="image" className={styles.label}>
-          이미지 첨부:
-        </label>
-        <input
-          id="image"
-          type="file"
-          className={styles.fileInput}
-          accept="image/*"
-          onChange={handleFileChange}
-        />
-      </div>
-      <div className={styles.boardWriteForm__form}>
-        <label htmlFor="content" className={styles.label}>
-          내용 :{" "}
-        </label>
-        <textarea
-          id="content"
-          className={styles.textarea}
-          value={boardContent}
-          onChange={(e) => setBoardContent(e.target.value)}
-          required
-        />
-      </div>
-      <button type="submit" className={styles.button}>
-        제출
-      </button>
-      <button
-        type="button"
-        className={styles.button}
-        onClick={() => navigate("/board")}
-      >
-        목록으로
-      </button>
-    </form>
+    <>
+      <form className={styles.boardWriteForm} onSubmit={handleSubmit}>
+        <h3 className={styles.boardWriteForm__title}>글쓰기</h3>
+        <div className={styles.boardWriteForm__form}>
+          <label htmlFor="title" className={styles.label}>
+            제목 :
+          </label>
+          <input
+            id="title"
+            type="text"
+            className={styles.input}
+            value={boardTitle}
+            onChange={(e) => setBoardTitle(e.target.value)}
+            required
+          />
+        </div>
+        <div className={styles.boardWriteForm__form}>
+          <label htmlFor="image" className={styles.label}>
+            이미지 첨부:
+          </label>
+          <input
+            id="image"
+            type="file"
+            className={styles.fileInput}
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+        </div>
+        <div className={styles.boardWriteForm__form}>
+          <label htmlFor="content" className={styles.label}>
+            내용 :{" "}
+          </label>
+          <textarea
+            id="content"
+            className={styles.textarea}
+            value={boardContent}
+            onChange={(e) => setBoardContent(e.target.value)}
+            required
+          />
+        </div>
+        <div className={styles.buttonArea}>
+          <button type="submit" className={styles.buttonArea__button}>
+            제출
+          </button>
+          <button
+            type="button"
+            className={styles.buttonArea__button}
+            onClick={() => navigate("/board")}
+          >
+            목록으로
+          </button>
+        </div>
+      </form>
+    </>
   );
 }
 

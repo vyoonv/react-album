@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Board from "../index/types/board";
 import styles from "./boardCss/Board.module.scss";
-import defaultImage from "../../assets/images/defaultProfile.jpg";
 
 interface Props {
   boardItem: Board;

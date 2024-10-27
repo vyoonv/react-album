@@ -20,6 +20,7 @@ function BoardDetail() {
     };
     fetchBoardItem();
   }, [id]);
+
   return (
     <div>
       {loading ? (

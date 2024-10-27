@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Loading from "../../index/component/Loading";
 
 function BoardDetail() {
   const { id } = useParams();
@@ -24,7 +25,7 @@ function BoardDetail() {
   return (
     <div>
       {loading ? (
-        <p>로딩중...</p>
+        <Loading />
       ) : (
         <div>
           <h3>{boardItem.boardTitle}</h3>

@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.album.react.board.model.mapper.BoardMapper">
 
+	<!--  게시물 업로드 -->
 	<insert id="uploadPost" parameterType="com.album.react.board.model.dto.Board">
 		INSERT INTO BOARD VALUES (
 			SEQ_BOARD.NEXTVAL, 
@@ -15,8 +16,15 @@
 		)
 	</insert>
 	
+	<!-- 게시판 리스트 불러오기 -->
 	<select id="getBoardList">
 	 	SELECT * FROM BOARD 
+	</select>
+	
+	<!-- 게시물 상세 -->
+	<select id="boardDetail">
+		SELECT * FROM BOARD 
+		WHERE BOARD_NO = #{boardNo}
 	</select>
 	
 

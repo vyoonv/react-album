@@ -20,4 +20,10 @@ public interface BoardMapper {
 	 */
 	List<Board> getBoardList();
 
+	/** 게시물 상세 
+	 * @param boardNo
+	 * @return
+	 */
+	Board boardDetail(int boardNo);
+
 }

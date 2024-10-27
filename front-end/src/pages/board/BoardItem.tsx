@@ -30,7 +30,7 @@ function BoardItem({ boardItem }: Props) {
     "https://www.lisa.or.kr/assets/user/images/menu07/no_img.gif";
 
   const onClickHandler = () => {
-    navigator(`board/${boardNo}`);
+    navigator(`/board/${boardNo}`);
   };
 
   return (

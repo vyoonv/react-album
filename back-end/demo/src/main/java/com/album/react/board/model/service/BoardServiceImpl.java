@@ -33,6 +33,15 @@ public class BoardServiceImpl implements BoardService{
 		mapper.uploadPost(board);
 	}
 
+	/**
+	 * 게시물 상세 
+	 */
+	@Override
+	public Board boardDetail(int boardNo) {
+		
+		return mapper.boardDetail(boardNo);
+	}
+
 
 
 }

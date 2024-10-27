@@ -17,5 +17,11 @@ public interface BoardService {
 	 */
 	void uploadPost(Board board);
 
+	/** 게시물 상세 
+	 * @param id
+	 * @return
+	 */
+	Board boardDetail(int id);
+
 
 }

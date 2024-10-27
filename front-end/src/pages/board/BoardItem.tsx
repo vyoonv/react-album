@@ -30,11 +30,11 @@ function BoardItem({ boardItem }: Props) {
     "https://www.lisa.or.kr/assets/user/images/menu07/no_img.gif";
 
   const onClickHandler = () => {
-    navigator(boardNo);
+    navigator(`board/${boardNo}`);
   };
 
   return (
-    <div className={styles.boardListItem}>
+    <div className={styles.boardListItem} onClick={onClickHandler}>
       <div className={styles.boardListItem__mainBox}>
         <div className={styles.boardListItem__mainBox__top}>
           <div className={styles.boardListItem__mainBox__top__profileBox}>

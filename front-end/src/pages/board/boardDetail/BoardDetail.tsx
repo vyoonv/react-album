@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Loading from "../../index/component/Loading";
+import styles from "../boardCss/BoardDetail.module.scss";
 
 function BoardDetail() {
   const { id } = useParams();
@@ -27,9 +28,13 @@ function BoardDetail() {
       {loading ? (
         <Loading />
       ) : (
-        <div>
-          <h3>{boardItem.boardTitle}</h3>
-          <p>{boardItem.boardContent}</p>
+        <div className={styles.boardArea}>
+          <div className={styles.boardArea__boardTitle}>
+            {boardItem.boardTitle}
+          </div>
+          <div className={styles.boardArea__boardContent}>
+            {boardItem.boardContent}
+          </div>
         </div>
       )}
     </div>

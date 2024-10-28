@@ -1,0 +1,12 @@
+.boardArea {
+  width: 700px;
+
+  border: 1px solid $color-gray-100;
+
+  &__boardTitle {
+    border-bottom: 1px solid $color-gray-200;
+  }
+  &__boardContent {
+    height: 600px;
+  }
+}

@@ -14,7 +14,6 @@ export default function index() {
   const fetchBoardList = async (): Promise<Board[]> => {
     try {
       const response = await axios.get("http://localhost/board/boardList");
-      console.log(response.data);
       setBoardList(response.data);
     } catch (error) {
       console.error("게시물 데이터를 불러오지 못했습니다.", error);

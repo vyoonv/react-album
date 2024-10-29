@@ -29,13 +29,6 @@ function BoardDetail() {
         <Loading />
       ) : (
         <div className={styles.boardArea}>
-          <div className={styles.boardArea__boardHead}>
-            <div>번호</div>
-            <div>제목</div>
-            <div>날짜</div>
-            <div>조회수</div>
-            <div>공감</div>
-          </div>
           <div className={styles.boardArea__boardTitle}>
             {boardItem.boardTitle}
           </div>
@@ -43,9 +36,6 @@ function BoardDetail() {
             {boardItem.boardContent}
           </div>
           <div>{boardItem.boardImg}</div>
-          {/* 
-              <div>페이지네이션</div>
-          */}
         </div>
       )}
     </div>

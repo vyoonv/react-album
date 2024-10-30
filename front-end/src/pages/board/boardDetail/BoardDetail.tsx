@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Loading from "../../index/component/Loading";
 import styles from "../boardCss/BoardDetail.module.scss";
+import CommentSection from "../CommentSection";
 
 function BoardDetail() {
   const { id } = useParams();
@@ -55,7 +56,8 @@ function BoardDetail() {
             {boardItem.boardContent}
           </div>
           <div>{boardItem.boardImg}</div>
-          {/* 여기에 댓글 자리  */}
+
+          <CommentSection />
         </div>
       )}
     </div>

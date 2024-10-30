@@ -30,7 +30,7 @@ function BoardDetail() {
       ) : (
         <div className={styles.boardArea}>
           <div className={styles.boardArea__boardTitle}>
-            {boardItem.boardTitle}
+            제목 : {boardItem.boardTitle}
           </div>
           <div className={styles.boardArea__boardContent}>
             {boardItem.boardContent}

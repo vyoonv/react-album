@@ -1,7 +1,7 @@
 .nav {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: end;
 
   padding: 0 16px;
 
@@ -10,7 +10,6 @@
   &__buttonArea {
     display: flex;
     align-items: center;
-    justify-content: end;
 
     &__button {
       display: flex;
@@ -29,24 +28,6 @@
 
       color: $color-white-000;
       background-color: $color-indigo-300;
-    }
-  }
-
-  &__boardHead {
-    &__number {
-      width: 4%;
-    }
-    &__title {
-      width: 84%;
-    }
-    &__date {
-      width: 4%;
-    }
-    &__views {
-      width: 4%;
-    }
-    &__likes {
-      width: 4%;
     }
   }
 }

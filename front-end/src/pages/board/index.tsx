@@ -5,6 +5,7 @@ import CommonHeader from "../../components/common/header/CommonHeader";
 import BoardNav from "./BoardNav";
 import Board from "../index/types/board";
 import Loading from "../index/component/Loading";
+import Pagination from "./Pagination";
 //import { latestBoardListMock } from "../board/latest-board-list.mock";
 
 export default function index() {
@@ -26,6 +27,8 @@ export default function index() {
     fetchBoardList();
   }, []);
 
+  const boardsPerPage = 10;
+
   return (
     <>
       <CommonHeader />
@@ -41,6 +44,11 @@ export default function index() {
           <BoardItem key={boardItem.boardNo} boardItem={boardItem} />
         ))
       )}
+      {/* 페이지네이션 */}
+      <Pagination
+        totalBoards={boardList.length}
+        boardsPerPage={boardsPerPage}
+      />
     </>
   );
 }

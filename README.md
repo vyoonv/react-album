@@ -13,6 +13,8 @@
   ![ㅂㅜㄱ마크](https://github.com/vyoonv/react-album/blob/ad2d87262209409c2c3cf9cc330c47bf8e42cf3a/YoonSplash%20(4).png)
 - 게시판
   ![ㄱㅔ시판](https://github.com/vyoonv/react-album/blob/5d73f8db3a117bc4f6b4673d1a9dd815e1f731e4/YoonSplash%20(9).png)
+- 게시글
+  ![ㄱㅔ시글](https://github.com/vyoonv/react-album/blob/ba61ae28af6ac651fdad7e521f3463a08ba470de/YoonSplash%20(7).png)
 
 ### 개발 환경
 1. 프로젝트 환경설정 : vite를 활용한 react 프로젝트 : yarn create vite

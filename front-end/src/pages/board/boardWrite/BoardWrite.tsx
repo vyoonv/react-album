@@ -65,7 +65,7 @@ function BoardWrite() {
         <h3 className={styles.boardWriteForm__title}>글쓰기</h3>
         <div className={styles.boardWriteForm__form}>
           <label htmlFor="title" className={styles.label}>
-            제목 :
+            제목
           </label>
           <input
             id="title"
@@ -78,7 +78,7 @@ function BoardWrite() {
         </div>
         <div className={styles.boardWriteForm__form}>
           <label htmlFor="image" className={styles.label}>
-            이미지 첨부:
+            첨부 파일
           </label>
           <input
             id="image"
@@ -90,7 +90,7 @@ function BoardWrite() {
         </div>
         <div className={styles.boardWriteForm__form}>
           <label htmlFor="content" className={styles.label}>
-            내용 :{" "}
+            내용{" "}
           </label>
           <textarea
             id="content"

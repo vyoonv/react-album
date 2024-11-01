@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.album.react.board.model.dto.Board;
+import com.album.react.comment.model.dto.Comment;
 
 @Mapper
 public interface BoardMapper {
@@ -25,5 +26,17 @@ public interface BoardMapper {
 	 * @return
 	 */
 	Board boardDetail(int boardNo);
+
+	/** 댓글 등록 
+	 * @param comment
+	 * @return
+	 */
+	Comment saveComment(Comment comment);
+
+	/** 댓글 조회 
+	 * @param boardNo
+	 * @return
+	 */
+	List<Comment> getCommentsByBoardId(int boardNo);
 
 }

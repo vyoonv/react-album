@@ -1,5 +1,7 @@
 package com.album.react.comment.model.dto;
 
+import java.time.LocalDateTime;
+
 import com.album.react.board.model.dto.Board;
 
 import lombok.AllArgsConstructor;
@@ -17,12 +19,13 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Comment {
 	
-	private int commentNo; 
+	private Integer commentNo; 
 	private String commentContent; 
 	private String writeDate; 
 
 	private int boardNo; 
 	private int userNo; 
+	private String userEmail;
 	private String profileImg; 
 	
 	private int parentCommentNo; // 부모 댓글 번호 

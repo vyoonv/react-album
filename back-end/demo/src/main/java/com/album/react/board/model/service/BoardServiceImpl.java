@@ -3,12 +3,15 @@ package com.album.react.board.model.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.album.react.board.model.dto.Board;
 import com.album.react.board.model.mapper.BoardMapper;
+import com.album.react.comment.model.dto.Comment;
 
 import lombok.RequiredArgsConstructor;
 
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService{
@@ -40,6 +43,24 @@ public class BoardServiceImpl implements BoardService{
 	public Board boardDetail(int boardNo) {
 		
 		return mapper.boardDetail(boardNo);
+	}
+
+	/**
+	 * 댓글 등록 
+	 */
+	@Override
+	public Comment saveComment(Comment comment) {
+		
+		return mapper.saveComment(comment);
+	}
+
+	/**
+	  댓글 조회 
+	 */
+	@Override
+	public List<Comment> getCommentsByBoardId(int boardNo) {
+		
+		return mapper.getCommentsByBoardId(boardNo);
 	}
 
 

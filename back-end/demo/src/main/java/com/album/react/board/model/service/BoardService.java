@@ -3,6 +3,7 @@ package com.album.react.board.model.service;
 import java.util.List;
 
 import com.album.react.board.model.dto.Board;
+import com.album.react.comment.model.dto.Comment;
 
 public interface BoardService {
 
@@ -22,6 +23,18 @@ public interface BoardService {
 	 * @return
 	 */
 	Board boardDetail(int id);
+
+	/** 댓글 등록 
+	 * @param comment
+	 * @return
+	 */
+	Comment saveComment(Comment comment);
+
+	/** 댓글 조회 
+	 * @param id
+	 * @return
+	 */
+	List<Comment> getCommentsByBoardId(int id);
 
 
 }

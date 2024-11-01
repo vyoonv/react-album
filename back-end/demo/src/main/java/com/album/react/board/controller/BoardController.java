@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.album.react.board.model.dto.Board;
+import com.album.react.board.model.dto.BoardResponse;
 import com.album.react.board.model.service.BoardService;
+import com.album.react.comment.model.dto.Comment;
 import com.album.react.user.model.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -64,15 +66,58 @@ public class BoardController {
 		
 	}
 	
+	/** 게시물 상세 
+	 * @param id
+	 * @return
+	 */
 	@GetMapping("/{id}")
-	public ResponseEntity<Board> boardDetail(@PathVariable("id") int id) {
+	public ResponseEntity<BoardResponse> boardDetail(@PathVariable("id") int id) {
 		Board board = service.boardDetail(id); 
 		if(board == null ) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND); 
 		}
-		return ResponseEntity.ok(board); 
+		
+		List<Comment> comments = service.getCommentsByBoardId(id); 
+		
+		BoardResponse response = new BoardResponse(); 
+		response.setBoardItem(board); 
+		response.setComments(comments); 
+		
+		return ResponseEntity.ok(response); 
 	}
 	
+	/** 댓글 등록 
+	 * @param boardNo
+	 * @param comment
+	 * @return
+	 */
+	@PostMapping("/{boardNo}/comments")
+	public ResponseEntity<Comment> addComment (@PathVariable("boardNo") int boardNo, 
+												@RequestBody Comment comment ) {
+		 Integer userNo = userService.getUserNo(comment.getUserEmail());
+
+		    if (userNo == null) {
+		        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+		                             .body(null); 
+		    }
+
+		    comment.setUserNo(userNo);
+		    comment.setBoardNo(boardNo);
+		    comment.setParentCommentNo(comment.getParentCommentNo() == null ? null : comment.getParentCommentNo());
+		    
+		    
+		    try {
+		        Comment savedComment = service.saveComment(comment);
+		        return new ResponseEntity<>(savedComment, HttpStatus.CREATED);
+		    } catch (Exception e) {
+		        // 로그에 에러 메시지 출력
+		        e.printStackTrace();
+		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+		                             .body(null);
+		    }
+		
+	}
+			
 	
 	
 

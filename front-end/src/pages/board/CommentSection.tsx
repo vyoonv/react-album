@@ -1,24 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../board/boardCss/BoardComment.module.scss";
 import Comment from "../index/types/comment";
 import { key } from "localforage";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { userState } from "../../stores/atoms/userState";
 
 interface CommentProps {
   comments: Comment[];
 }
 
 function CommentSection({
-  comments = [],
+  comments: initialComments = [],
   boardNo,
 }: {
   comments: Comment[];
   boardNo: number;
 }) {
+  const [user] = useRecoilState(userState);
+  const [comments, setComments] = useState<Comment[]>(initialComments);
   const [newComment, setNewComment] = useState("");
   const [replyComment, setReplyComment] = useState<{ [key: number]: string }>(
     {}
   );
+  const [replyVisible, setReplyVisible] = useState<{ [key: number]: boolean }>(
+    {}
+  );
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setComments(initialComments);
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setNewComment(e.target.value);
@@ -31,9 +43,9 @@ function CommentSection({
   };
 
   const toggleReplyInput = (commentNo: number) => {
-    setReplyComment((prev) => ({
+    setReplyVisible((prev) => ({
       ...prev,
-      [commentNo]: prev[commentNo] ? "" : "",
+      [commentNo]: !prev[commentNo],
     }));
   };
 
@@ -41,16 +53,30 @@ function CommentSection({
     if (!newComment.trim()) return;
 
     try {
-      const response = await axios.post("/api/comments", {
-        boardNo,
-        commentContent: newComment,
-      });
+      const response = await axios.post(
+        `http://localhost/board/${boardNo}/comments`,
+        {
+          boardNo,
+          commentContent: newComment,
+          parentCommentNo: null,
+          depth: 0, // 일반 댓글
+          userEmail: user.email,
+        }
+      );
 
       if (response.status === 201) {
+        setComments((prev) => [
+          ...prev,
+          {
+            ...response.data,
+            parentCommentNo: null,
+          },
+        ]);
         setNewComment("");
       }
     } catch (error) {
       console.error("댓글 등록 실패 : ", error);
+      setError("댓글 등록에 실패했습니다.");
     }
   };
 
@@ -59,20 +85,37 @@ function CommentSection({
     if (!replyContent.trim()) return;
 
     try {
-      const response = await axios.post("/api/comments", {
-        boardNo,
-        commentContent: replyContent,
-        parentCommentNo: commentNo,
-      });
+      const response = await axios.post(
+        `http://localhost/board/${boardNo}/comments`,
+        {
+          boardNo,
+          commentContent: replyContent,
+          parentCommentNo: commentNo,
+          depth: 1, // 대댓글 깊이
+          userEmail: user.email,
+        }
+      );
 
       if (response.status === 201) {
+        setComments((prev) => [
+          ...prev,
+          {
+            ...response.data, // 서버에서 반환된 새 대댓글 데이터
+            parentCommentNo: commentNo,
+          },
+        ]);
         setReplyComment((prev) => ({
           ...prev,
           [commentNo]: "",
         }));
+        setReplyVisible((prev) => ({
+          ...prev,
+          [commentNo]: false, // 대댓글 입력란 닫기
+        }));
       }
     } catch (error) {
       console.error("대댓글 등록 실패 : ", error);
+      setError("대댓글 등록 실패");
     }
   };
 
@@ -97,17 +140,14 @@ function CommentSection({
               <button onClick={() => toggleReplyInput(comment.commentNo)}>
                 댓글
               </button>
-              {replyComment[comment.commentNo] !== undefined && (
+              {replyVisible[comment.commentNo] && (
                 <div className={styles.comment__input}>
                   <input
                     type="text"
                     placeholder="댓글 입력하세요."
-                    value={replyComment[comment.commentNo]}
+                    value={replyComment[comment.commentNo] || ""}
                     onChange={(e) =>
-                      setReplyComment({
-                        ...replyComment,
-                        [comment.commentNo]: e.target.value,
-                      })
+                      handleReplyChange(comment.commentNo, e.target.value)
                     }
                   />
                   <button onClick={() => submitReplyComment(comment.commentNo)}>
@@ -150,6 +190,9 @@ function CommentSection({
         />
         <button onClick={submitComment}>등록</button>
       </div>
+
+      {/* 오류 메시지 표시 */}
+      {error && <p className={styles.errorMessage}>{error}</p>}
     </div>
   );
 }

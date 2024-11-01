@@ -23,6 +23,11 @@ public class BookmarkController {
 	
 	private final BookmarkService service; 
 	
+	/** 북마크 저장하기 
+	 * @param bookmarkRequest
+	 * @param request
+	 * @return
+	 */
 	@PostMapping("/bookmark")
 	public ResponseEntity<String> addBookmark( @RequestBody BookmarkRequest bookmarkRequest,
 												HttpServletRequest request) {
@@ -48,6 +53,10 @@ public class BookmarkController {
 		
 	}
 	
+	/** 북마크 삭제하기 
+	 * @param imageId
+	 * @return
+	 */
 	@DeleteMapping("/bookmark/{imageId}")
 	public ResponseEntity<String> deleteBookmark (@PathVariable("imageId") String imageId) {
 		

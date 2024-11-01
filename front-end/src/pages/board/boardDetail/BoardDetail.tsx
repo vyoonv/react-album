@@ -8,13 +8,16 @@ import CommentSection from "../CommentSection";
 function BoardDetail() {
   const { id } = useParams();
   const [boardItem, setBoardItem] = useState(null);
+  const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchBoardItem = async () => {
       try {
         const response = await axios.get(`http://localhost/board/${id}`);
-        setBoardItem(response.data);
+        console.log("응답하나요 : ", response.data);
+        setBoardItem(response.data.boardItem);
+        setComments(response.data.comments || []);
       } catch (error) {
         console.error("게시물 데이터를 불러오지 못했습니다.", error);
       } finally {
@@ -57,7 +60,7 @@ function BoardDetail() {
           </div>
           <div>{boardItem.boardImg}</div>
 
-          <CommentSection />
+          <CommentSection comments={comments} boardNo={boardItem.boardNo} />
         </div>
       )}
     </div>

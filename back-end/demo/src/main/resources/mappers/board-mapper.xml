@@ -23,9 +23,28 @@
 	
 	<!-- 게시물 상세 -->
 	<select id="boardDetail">
-		SELECT * FROM BOARD 
-		WHERE BOARD_NO = #{boardNo}
+		SELECT * FROM BOARD
+	    WHERE BOARD_NO = #{boardNo}
 	</select>
+	
+	<!-- 댓글 조회 -->
+	<select id="getCommentsByBoardId">
+    	SELECT * FROM "COMMENT" 
+    	WHERE BOARD_NO = #{boardNo}
+	</select>
+	
+	<!-- 댓글 등록 -->
+	<insert id="saveComment">
+		 INSERT INTO "COMMENT" 
+	    VALUES 
+	    (SEQ_COMMENT.NEXTVAL, #{commentContent},default, #{boardNo}, #{userNo},
+	    <if test="parentCommentNo != null">
+	        #{parentCommentNo}
+	    </if>
+	    <if test="parentCommentNo == null">
+	        null
+	    </if>, #{depth})
+	</insert>
 	
 
 </mapper>

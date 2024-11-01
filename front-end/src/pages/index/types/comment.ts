@@ -4,4 +4,5 @@ export default interface Comment {
   commentContent: string;
   commentNo: number;
   boardNo: number;
+  parentCommentNo?: number | null;
 }

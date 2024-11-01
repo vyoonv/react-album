@@ -25,6 +25,8 @@ public class Comment {
 	private int userNo; 
 	private String profileImg; 
 	
+	private int parentCommentNo; // 부모 댓글 번호 
+	private int depth; // 0은 기본 1은 대댓글 
 	
 
 }

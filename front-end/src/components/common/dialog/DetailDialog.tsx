@@ -117,7 +117,8 @@ function DetailDialog({ data, handleDialog }: Props) {
   };
 
   return (
-    <div className={styles.container} onClick={closeDialog}>
+    <div className={styles.container}>
+      {/*컨테이너에 closeDialog 사용하면 어딜 클릭해도 모달창 닫힘*/}
       <div className={styles.container__dialog}>
         <div className={styles.container__dialog__header}>
           <div className={styles.close}>

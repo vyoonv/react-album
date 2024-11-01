@@ -68,3 +68,31 @@
     }
   }
 }
+
+.replyComment {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+  margin-left: 50px; // 대댓글 들여쓰기
+  padding-left: 10px;
+  border-left: 2px solid $color-gray-100;
+
+  &__profileImg {
+    width: 35px;
+    height: 35px;
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__userName {
+    font-weight: bold;
+    margin-bottom: 3px;
+  }
+
+  &__text {
+    font-size: 13px;
+    color: $color-gray-700;
+  }
+}

@@ -1,23 +1,79 @@
 import { useState } from "react";
 import styles from "../board/boardCss/BoardComment.module.scss";
 import Comment from "../index/types/comment";
+import { key } from "localforage";
+import axios from "axios";
 
 interface CommentProps {
   comments: Comment[];
 }
 
-function CommentSection({ comments = [] }: CommentProps) {
-  const [replyComment, setReplyComment] = useState({});
+function CommentSection({
+  comments = [],
+  boardNo,
+}: {
+  comments: Comment[];
+  boardNo: number;
+}) {
   const [newComment, setNewComment] = useState("");
+  const [replyComment, setReplyComment] = useState<{ [key: number]: string }>(
+    {}
+  );
 
-  const handleInputChange = (e) => setNewComment(e.target.value);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setNewComment(e.target.value);
 
-  const toggleReplyInput = (commentNo) => {
-    setReplyComment((prev) =>
-      prev[commentNo]
-        ? { ...prev, [commentNo]: "" }
-        : { ...prev, [commentNo]: "" }
-    );
+  const handleReplyChange = (commentNo: number, value: string) => {
+    setReplyComment((prev) => ({
+      ...prev,
+      [commentNo]: value,
+    }));
+  };
+
+  const toggleReplyInput = (commentNo: number) => {
+    setReplyComment((prev) => ({
+      ...prev,
+      [commentNo]: prev[commentNo] ? "" : "",
+    }));
+  };
+
+  const submitComment = async () => {
+    if (!newComment.trim()) return;
+
+    try {
+      const response = await axios.post("/api/comments", {
+        boardNo,
+        commentContent: newComment,
+      });
+
+      if (response.status === 201) {
+        setNewComment("");
+      }
+    } catch (error) {
+      console.error("댓글 등록 실패 : ", error);
+    }
+  };
+
+  const submitReplyComment = async (commentNo: number) => {
+    const replyContent = replyComment[commentNo];
+    if (!replyContent.trim()) return;
+
+    try {
+      const response = await axios.post("/api/comments", {
+        boardNo,
+        commentContent: replyContent,
+        parentCommentNo: commentNo,
+      });
+
+      if (response.status === 201) {
+        setReplyComment((prev) => ({
+          ...prev,
+          [commentNo]: "",
+        }));
+      }
+    } catch (error) {
+      console.error("대댓글 등록 실패 : ", error);
+    }
   };
 
   return (
@@ -54,7 +110,9 @@ function CommentSection({ comments = [] }: CommentProps) {
                       })
                     }
                   />
-                  <button>등록</button>
+                  <button onClick={() => submitReplyComment(comment.commentNo)}>
+                    등록
+                  </button>
                 </div>
               )}
 
@@ -90,7 +148,7 @@ function CommentSection({ comments = [] }: CommentProps) {
           onChange={handleInputChange}
           placeholder="댓글을 입력하세요."
         />
-        <button>등록</button>
+        <button onClick={submitComment}>등록</button>
       </div>
     </div>
   );

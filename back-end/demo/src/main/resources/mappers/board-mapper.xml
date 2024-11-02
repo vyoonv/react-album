@@ -34,16 +34,22 @@
 	</select>
 	
 	<!-- 댓글 등록 -->
-	<insert id="saveComment">
-		 INSERT INTO "COMMENT" 
-	    VALUES 
-	    (SEQ_COMMENT.NEXTVAL, #{commentContent},default, #{boardNo}, #{userNo},
+	<insert id="saveComment" parameterType="com.album.react.comment.model.dto.Comment">
+	  <selectKey keyProperty="commentNo" resultType="int" order="BEFORE">
+	    SELECT SEQ_COMMENT.NEXTVAL FROM DUAL
+	  </selectKey>
+	  INSERT INTO "COMMENT" 
+	  VALUES 
+	  (
+	    #{commentNo}, #{commentContent}, default, #{boardNo}, #{userNo}, 
 	    <if test="parentCommentNo != null">
-	        #{parentCommentNo}
+	      #{parentCommentNo}
 	    </if>
 	    <if test="parentCommentNo == null">
-	        null
-	    </if>, #{depth})
+	      null
+	    </if>, 
+	    #{depth}
+	  )
 	</insert>
 	
 

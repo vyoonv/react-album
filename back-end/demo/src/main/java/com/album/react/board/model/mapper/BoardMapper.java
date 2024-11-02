@@ -31,7 +31,7 @@ public interface BoardMapper {
 	 * @param comment
 	 * @return
 	 */
-	Comment saveComment(Comment comment);
+	int saveComment(Comment comment);
 
 	/** 댓글 조회 
 	 * @param boardNo

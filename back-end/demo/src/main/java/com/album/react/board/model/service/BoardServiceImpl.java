@@ -51,7 +51,14 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public Comment saveComment(Comment comment) {
 		
-		return mapper.saveComment(comment);
+		int result = mapper.saveComment(comment);
+		
+		if(result > 0) {
+			return comment; 
+		} else {
+			throw new RuntimeException("댓글 등록 실패했습니다."); 
+		}
+
 	}
 
 	/**

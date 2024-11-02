@@ -107,8 +107,11 @@ public class BoardController {
 		    
 		    
 		    try {
+		    	
 		        Comment savedComment = service.saveComment(comment);
+		        
 		        return new ResponseEntity<>(savedComment, HttpStatus.CREATED);
+		        
 		    } catch (Exception e) {
 		        // 로그에 에러 메시지 출력
 		        e.printStackTrace();

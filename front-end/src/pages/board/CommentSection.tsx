@@ -150,7 +150,10 @@ function CommentSection({
             <p className={styles.comment_text}>{comment.commentContent}</p>
 
             {/* 대댓글 입력 표시 */}
-            <button onClick={() => toggleReplyInput(comment.commentNo)}>
+            <button
+              onClick={() => toggleReplyInput(comment.commentNo)}
+              className={styles.comment__button}
+            >
               댓글
             </button>
             {replyVisible[comment.commentNo] && (

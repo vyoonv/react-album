@@ -52,5 +52,12 @@
 	  )
 	</insert>
 	
+	<!-- 좋아요 업데이트 -->
+	<update id="updateLikeCount">
+		UPDATE BOARD
+		SET LIKE_COUNT = LIKE_COUNT + #{increment}
+		WHERE BOARD_NO = #{boardNo}
+	</update>
+	
 
 </mapper>

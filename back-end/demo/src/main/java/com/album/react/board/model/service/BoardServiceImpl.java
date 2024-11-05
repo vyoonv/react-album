@@ -70,6 +70,24 @@ public class BoardServiceImpl implements BoardService{
 		return mapper.getCommentsByBoardId(boardNo);
 	}
 
+	/**
+	 * 좋아요 증가 
+	 */
+	@Override
+	public boolean incrementLikeCount(int boardNo) {
+		
+		return mapper.updateLikeCount(boardNo, 1) > 0;
+	}
+
+	/**
+	 * 좋아요 감소 
+	 */
+	@Override
+	public boolean decrementLikeCount(int boardNo) {
+		
+		return mapper.updateLikeCount(boardNo, -1) > 0;
+	}
+
 
 
 }

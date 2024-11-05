@@ -10,7 +10,7 @@ function BoardDetail() {
   const [boardItem, setBoardItem] = useState(null);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [likeCount, setLikeCount] = useState(boardItem.likeCount);
+  const [likeCount, setLikeCount] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
@@ -19,6 +19,7 @@ function BoardDetail() {
         const response = await axios.get(`http://localhost/board/${id}`);
         setBoardItem(response.data.boardItem);
         setComments(response.data.comments || []);
+        setLikeCount(response.data.boardItem.likeCount || 0);
       } catch (error) {
         console.error("게시물 데이터를 불러오지 못했습니다.", error);
       } finally {
@@ -40,13 +41,16 @@ function BoardDetail() {
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   };
 
-  const handleLike = () => {
-    if (isLiked) {
-      setLikeCount((prevCount) => prevCount - 1);
-    } else {
-      setLikeCount((prevCount) => prevCount + 1);
+  const handleLike = async () => {
+    try {
+      await axios.post(`http://localhost/board/${id}/like`, {
+        isLiked: !isLiked,
+      });
+      setLikeCount((prevCount) => (isLiked ? prevCount - 1 : prevCount + 1));
+      setIsLiked(!isLiked);
+    } catch (error) {
+      console.error("좋아요 업데이트 실패", error);
     }
-    setIsLiked(!isLiked);
   };
 
   return (
@@ -67,11 +71,16 @@ function BoardDetail() {
           </div>
           <div className={styles.boardArea__boardContent}>
             {boardItem.boardContent}
+            <div>
+              <button
+                onClick={handleLike}
+                className={styles.boardArea__boardContent__likeButton}
+              >
+                공감 {isLiked ? "❤️" : "🤍"}
+              </button>
+            </div>
           </div>
           <div>{boardItem.boardImg}</div>
-          <div>
-            <button onClick={handleLike}>{isLiked ? "❤️" : "🤍"}공감</button>
-          </div>
 
           <CommentSection comments={comments} boardNo={boardItem.boardNo} />
         </div>

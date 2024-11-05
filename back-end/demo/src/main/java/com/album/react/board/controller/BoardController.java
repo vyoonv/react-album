@@ -5,6 +5,7 @@ import java.util.List;
 import javax.swing.border.Border;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.album.react.board.model.dto.Board;
 import com.album.react.board.model.dto.BoardResponse;
+import com.album.react.board.model.dto.LikeRequest;
 import com.album.react.board.model.service.BoardService;
 import com.album.react.comment.model.dto.Comment;
 import com.album.react.user.model.service.UserService;
@@ -121,7 +123,32 @@ public class BoardController {
 		
 	}
 			
+	@PostMapping("/{id}/like")
+	public ResponseEntity<Void> updateLikeCount(@PathVariable("id") int boardNo, 
+												@RequestBody LikeRequest likeRequest) {
+
+		boolean isLiked = likeRequest.isLiked(); 
 	
+		try {
+			boolean isUpdated; 
+			
+			if(isLiked) {
+				isUpdated = service.incrementLikeCount(boardNo); 
+			} else {
+				isUpdated = service.decrementLikeCount(boardNo); 
+			}
+			
+			if(isUpdated) {
+				return ResponseEntity.ok().build(); 
+				
+				} else {
+					return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+				}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); 
+		}
+	}
 	
 
 }

@@ -36,5 +36,17 @@ public interface BoardService {
 	 */
 	List<Comment> getCommentsByBoardId(int id);
 
+	/** 좋아요 증가 
+	 * @param boardNo
+	 * @return
+	 */
+	boolean incrementLikeCount(int boardNo);
+
+	/** 좋아요 감소 
+	 * @param boardNo
+	 * @return
+	 */
+	boolean decrementLikeCount(int boardNo);
+
 
 }

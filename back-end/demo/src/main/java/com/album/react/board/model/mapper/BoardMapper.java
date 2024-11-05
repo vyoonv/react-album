@@ -39,4 +39,11 @@ public interface BoardMapper {
 	 */
 	List<Comment> getCommentsByBoardId(int boardNo);
 
+	/** 좋아요 업데이트 
+	 * @param boardNo
+	 * @param i
+	 * @return
+	 */
+	int updateLikeCount(int boardNo, int increment);
+
 }

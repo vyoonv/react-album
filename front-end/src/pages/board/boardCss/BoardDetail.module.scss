@@ -30,12 +30,27 @@
     }
   }
   &__boardContent {
-    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
 
+    min-height: 600px;
     padding: 20px;
+    border-bottom: 1px solid $color-gray-200;
 
     font-size: 14px;
 
-    border-bottom: 1px solid $color-gray-200;
+    &__likeButton {
+      position: absolute;
+      left: 50%;
+      bottom: 3%;
+      transform: translateX(-50%);
+
+      border: none;
+      background-color: transparent;
+
+      cursor: pointer;
+    }
   }
 }

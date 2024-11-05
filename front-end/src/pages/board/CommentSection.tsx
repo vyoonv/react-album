@@ -154,7 +154,7 @@ function CommentSection({
               onClick={() => toggleReplyInput(comment.commentNo)}
               className={styles.comment__button}
             >
-              댓글
+              답글
             </button>
             {replyVisible[comment.commentNo] && (
               <div className={styles.comment__input}>

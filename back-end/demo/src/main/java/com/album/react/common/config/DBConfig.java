@@ -39,7 +39,7 @@ public class DBConfig {
 		return dataSource;
 	}
 	
-	// 위에 까지는 hikariCP 위한 설정
+	// --> hikariCP 위한 설정
 	
 	// Mybatis 설정
 	@Bean

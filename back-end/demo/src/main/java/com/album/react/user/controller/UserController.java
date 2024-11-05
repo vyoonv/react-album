@@ -24,6 +24,10 @@ public class UserController {
 	
 	private final UserService service; 
 	
+	/** 로그인 / 최초 로그인 시 회원가입 처리 
+	 * @param user
+	 * @return
+	 */
 	@PostMapping("/login")
 	public ResponseEntity<String> login(@RequestBody User user) {
 		
@@ -34,6 +38,10 @@ public class UserController {
 		return ResponseEntity.ok("환영합니다~"); 
 	}
 	
+	/** 기존 회원 여부 확인 
+	 * @param request
+	 * @return
+	 */
 	@PostMapping("/checkUser")
 	public ResponseEntity<Map<String, Object>> checkUser( @RequestBody Map<String, String> request) {
 		

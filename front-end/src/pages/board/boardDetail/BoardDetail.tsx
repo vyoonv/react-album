@@ -10,12 +10,13 @@ function BoardDetail() {
   const [boardItem, setBoardItem] = useState(null);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [likeCount, setLikeCount] = useState(boardItem.likeCount);
+  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
     const fetchBoardItem = async () => {
       try {
         const response = await axios.get(`http://localhost/board/${id}`);
-        console.log("응답하나요 : ", response.data);
         setBoardItem(response.data.boardItem);
         setComments(response.data.comments || []);
       } catch (error) {
@@ -39,6 +40,15 @@ function BoardDetail() {
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   };
 
+  const handleLike = () => {
+    if (isLiked) {
+      setLikeCount((prevCount) => prevCount - 1);
+    } else {
+      setLikeCount((prevCount) => prevCount + 1);
+    }
+    setIsLiked(!isLiked);
+  };
+
   return (
     <div>
       {loading ? (
@@ -51,7 +61,7 @@ function BoardDetail() {
             </div>
             <div className={styles.boardArea__boardTitle__counts}>
               <div>👀 {boardItem.viewCount}</div>
-              <div>👍 {boardItem.likeCount}</div>
+              <div>❤️ {boardItem.likeCount}</div>
               <div>{formatDate(boardItem.writeDate)}</div>
             </div>
           </div>
@@ -59,6 +69,9 @@ function BoardDetail() {
             {boardItem.boardContent}
           </div>
           <div>{boardItem.boardImg}</div>
+          <div>
+            <button onClick={handleLike}>{isLiked ? "❤️" : "🤍"}공감</button>
+          </div>
 
           <CommentSection comments={comments} boardNo={boardItem.boardNo} />
         </div>

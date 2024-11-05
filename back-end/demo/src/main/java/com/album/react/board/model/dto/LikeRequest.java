@@ -16,5 +16,6 @@ import lombok.ToString;
 public class LikeRequest {
 	
 	private boolean isLiked;
+	private String userEmail; 
 
 }

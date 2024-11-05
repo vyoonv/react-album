@@ -21,5 +21,7 @@ public class BoardResponse {
 	
 	private Board boardItem; 
 	private List<Comment> comments; 
+	private boolean isLiked; 
+	private int likeCount; 
 
 }

@@ -1,6 +1,7 @@
 package com.album.react.board.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -39,11 +40,22 @@ public interface BoardMapper {
 	 */
 	List<Comment> getCommentsByBoardId(int boardNo);
 
-	/** 좋아요 업데이트 
+	/** 좋아요 증가 
 	 * @param boardNo
-	 * @param i
 	 * @return
 	 */
-	int updateLikeCount(int boardNo, int increment);
+	int incrementLikeCount(int boardNo);
+
+	/** 좋아요 감소 
+	 * @param boardNo
+	 * @return
+	 */
+	int decrementLikeCount(int boardNo);
+
+	int checkIfLiked(Map<String, Object> params);
+
+	void insertLike(Map<String, Object> params);
+
+	void deleteLike(Map<String, Object> params);
 
 }

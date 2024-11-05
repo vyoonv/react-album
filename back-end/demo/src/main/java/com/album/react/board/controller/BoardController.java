@@ -1,13 +1,11 @@
 package com.album.react.board.controller;
 
 import java.util.List;
-
-import javax.swing.border.Border;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +21,9 @@ import com.album.react.comment.model.dto.Comment;
 import com.album.react.user.model.service.UserService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/board")
 @RequiredArgsConstructor
@@ -84,6 +84,7 @@ public class BoardController {
 		BoardResponse response = new BoardResponse(); 
 		response.setBoardItem(board); 
 		response.setComments(comments); 
+		response.setLikeCount(board.getLikeCount());
 		
 		return ResponseEntity.ok(response); 
 	}
@@ -123,27 +124,30 @@ public class BoardController {
 		
 	}
 			
-	@PostMapping("/{id}/like")
-	public ResponseEntity<Void> updateLikeCount(@PathVariable("id") int boardNo, 
-												@RequestBody LikeRequest likeRequest) {
-
-		boolean isLiked = likeRequest.isLiked(); 
-	
+	/** 좋아요 업데이트 
+	 * @param boardNo
+	 * @param likeRequest
+	 * @return
+	 */
+	@PostMapping(value = "/{id}/like", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Integer> updateLikeCount(@PathVariable("id") int boardNo, 
+												   @RequestBody Map<String, Object> likeRequest) {
+		 log.info("Received LikeRequest: {}", likeRequest); 
+		 boolean isLiked = (Boolean) likeRequest.get("isLiked");
+	     String userEmail = (String) likeRequest.get("userEmail"); 
+		 log.info("사용자 이메일: {}", userEmail); 
+		 log.info("공감 눌린상태?? : {}", isLiked);
+		
 		try {
-			boolean isUpdated; 
+			int isUpdated; 
 			
 			if(isLiked) {
-				isUpdated = service.incrementLikeCount(boardNo); 
+				isUpdated = service.incrementLikeCount(boardNo, userEmail); 
 			} else {
-				isUpdated = service.decrementLikeCount(boardNo); 
+				isUpdated = service.decrementLikeCount(boardNo, userEmail); 
 			}
-			
-			if(isUpdated) {
-				return ResponseEntity.ok().build(); 
+				return ResponseEntity.ok(isUpdated);
 				
-				} else {
-					return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-				}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); 

@@ -33,6 +33,7 @@
     	WHERE BOARD_NO = #{boardNo}
 	</select>
 	
+	
 	<!-- 댓글 등록 -->
 	<insert id="saveComment" parameterType="com.album.react.comment.model.dto.Comment">
 	  <selectKey keyProperty="commentNo" resultType="int" order="BEFORE">
@@ -52,10 +53,36 @@
 	  )
 	</insert>
 	
-	<!-- 좋아요 업데이트 -->
-	<update id="updateLikeCount">
+	<!-- 좋아요 여부 확인 -->
+	<select id="checkIfLiked" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM LIKES
+		WHERE BOARD_NO = #{boardNo} AND USER_EMAIL = #{userEmail}
+	</select>
+	
+	<!-- 좋아요 추가 -->
+	<insert id="insertLike">
+		INSERT INTO LIKES VALUES(LIKE_NO_SEQ.NEXTVAL, #{boardNo}, #{userEmail})
+	</insert>
+	
+	<!-- 좋아요 삭제 -->
+	<delete id="deleteLike">
+		DELETE FROM LIKES 
+		WHERE BOARD_NO = #{boardNo}
+		AND USER_EMAIL = #{userEmail}
+	</delete>
+	
+	<!-- 좋아요 증가 -->
+	<update id="incrementLikeCount">
 		UPDATE BOARD
-		SET LIKE_COUNT = LIKE_COUNT + #{increment}
+		SET LIKE_COUNT = LIKE_COUNT + 1
+		WHERE BOARD_NO = #{boardNo}
+	</update>
+	
+	<!-- 좋아요 감소 -->
+	<update id="decrementLikeCount">
+		UPDATE BOARD
+		SET LIKE_COUNT = LIKE_COUNT - 1
 		WHERE BOARD_NO = #{boardNo}
 	</update>
 	

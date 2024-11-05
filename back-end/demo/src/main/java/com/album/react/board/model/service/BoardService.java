@@ -1,5 +1,6 @@
 package com.album.react.board.model.service;
 
+import java.security.Principal;
 import java.util.List;
 
 import com.album.react.board.model.dto.Board;
@@ -38,15 +39,17 @@ public interface BoardService {
 
 	/** 좋아요 증가 
 	 * @param boardNo
+	 * @param userEmail 
 	 * @return
 	 */
-	boolean incrementLikeCount(int boardNo);
+	int incrementLikeCount(int boardNo, String userEmail);
 
 	/** 좋아요 감소 
 	 * @param boardNo
+	 * @param userEmail 
 	 * @return
 	 */
-	boolean decrementLikeCount(int boardNo);
+	int decrementLikeCount(int boardNo, String userEmail);
 
 
 }

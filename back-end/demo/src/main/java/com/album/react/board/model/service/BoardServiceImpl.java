@@ -1,6 +1,9 @@
 package com.album.react.board.model.service;
 
+import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,18 +77,44 @@ public class BoardServiceImpl implements BoardService{
 	 * 좋아요 증가 
 	 */
 	@Override
-	public boolean incrementLikeCount(int boardNo) {
+	public int incrementLikeCount(int boardNo, String userEmail) {
 		
-		return mapper.updateLikeCount(boardNo, 1) > 0;
+		Map<String, Object> params = new HashMap<>(); 
+		params.put("boardNo", boardNo); 
+		params.put("userEmail", userEmail); 
+		
+		int ifLikedBefore = mapper.checkIfLiked(params); 
+		
+		if(ifLikedBefore == 0) {
+			mapper.insertLike(params); 
+			return mapper.incrementLikeCount(boardNo); 
+			
+		} else {
+			return 0; 
+		}
+		
 	}
 
 	/**
 	 * 좋아요 감소 
 	 */
 	@Override
-	public boolean decrementLikeCount(int boardNo) {
+	public int decrementLikeCount(int boardNo, String userEmail) {
 		
-		return mapper.updateLikeCount(boardNo, -1) > 0;
+		Map<String, Object> params = new HashMap<>(); 
+		params.put("boardNo", boardNo); 
+		params.put("userEmail", userEmail); 
+		
+		int ifLikedBefore = mapper.checkIfLiked(params); 
+		
+		if(ifLikedBefore > 0) {
+			mapper.deleteLike(params); 
+			return	mapper.decrementLikeCount(boardNo);
+			
+		} else {
+			return 0; 
+		}
+		
 	}
 
 

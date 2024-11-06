@@ -52,10 +52,26 @@ public interface BoardMapper {
 	 */
 	int decrementLikeCount(int boardNo);
 
+	/** 좋아요 여부 확인 
+	 * @param params
+	 * @return
+	 */
 	int checkIfLiked(Map<String, Object> params);
 
+	/** 좋아요 추가 (user에게) 
+	 * @param params
+	 */
 	void insertLike(Map<String, Object> params);
 
+	/** 좋아요 삭제(user에게) 
+	 * @param params
+	 */
 	void deleteLike(Map<String, Object> params);
+
+	/** 조회수 증가 
+	 * @param boardNo
+	 * @return
+	 */
+	void incrementViewCount(int boardNo);
 
 }

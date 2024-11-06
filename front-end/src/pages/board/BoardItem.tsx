@@ -20,6 +20,7 @@ function BoardItem({ boardItem }: Props) {
     commentCount,
     likeCount,
     viewCount,
+    isLiked,
   } = boardItem;
 
   const navigator = useNavigate();

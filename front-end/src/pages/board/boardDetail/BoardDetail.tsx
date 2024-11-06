@@ -26,6 +26,7 @@ function BoardDetail() {
       const userEmail = user.email;
       console.log("userEmail : ", userEmail);
       try {
+        await axios.post(`http://localhost/board/${id}/viewCount`);
         const response = await axios.get(`http://localhost/board/${id}`, {
           params: { userEmail },
         });
@@ -33,7 +34,7 @@ function BoardDetail() {
         setBoardItem(response.data.boardItem);
         setComments(response.data.comments || []);
         setLikeCount(response.data.boardItem.likeCount || 0);
-        setIsLiked(response.data.isLiked);
+        setIsLiked(response.data.boardItem.isLiked);
       } catch (error) {
         console.error("게시물 데이터를 불러오지 못했습니다.", error);
       } finally {
@@ -43,7 +44,7 @@ function BoardDetail() {
     if (user && user.email) {
       fetchBoardItem();
     }
-  }, [id, user]);
+  }, [id]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -88,7 +89,7 @@ function BoardDetail() {
             </div>
             <div className={styles.boardArea__boardTitle__counts}>
               <div>👀 {boardItem.viewCount}</div>
-              <div>❤️ {likeCount}</div>
+              <div>❤️ {boardItem.likeCount}</div>
               <div>{formatDate(boardItem.writeDate)}</div>
             </div>
           </div>
@@ -99,7 +100,7 @@ function BoardDetail() {
                 onClick={handleLike}
                 className={styles.boardArea__boardContent__likeButton}
               >
-                공감 {isLiked ? "❤️" : "🤍"}
+                공감 {boardItem.isLiked ? "❤️" : "🤍"}
               </button>
             </div>
           </div>

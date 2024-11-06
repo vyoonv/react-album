@@ -136,6 +136,18 @@ public class BoardServiceImpl implements BoardService{
 		return ifLikedBefore > 0; 
 	}
 
+	@Override
+	public void incrementViewCount(int boardNo) {
+		
+		try {
+	        mapper.incrementViewCount(boardNo);
+	        
+	    } catch (Exception e) {
+	        throw new RuntimeException("조회수 증가에 실패했습니다.", e);
+	    }
+		
+	}
+
 
 
 }

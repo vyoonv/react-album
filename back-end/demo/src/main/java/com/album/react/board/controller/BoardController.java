@@ -97,6 +97,53 @@ public class BoardController {
 		return ResponseEntity.ok(response); 
 	}
 	
+	/** 조회수 증가 
+	 * @param id
+	 * @return
+	 */
+	@PostMapping("/{id}/viewCount")
+	public ResponseEntity<Void> viewCount(@PathVariable("id") int id) {
+		
+		log.info("게시글 번호 : {}", id);
+		
+		try {
+			service.incrementViewCount(id); 
+			return ResponseEntity.status(HttpStatus.OK).build(); 
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); 
+		}
+	}
+			
+	/** 좋아요 업데이트 
+	 * @param boardNo
+	 * @param likeRequest
+	 * @return
+	 */
+	@PostMapping(value = "/{id}/like", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Integer> updateLikeCount(@PathVariable("id") int boardNo, 
+												   @RequestBody Map<String, Object> likeRequest) {
+		 log.info("Received LikeRequest: {}", likeRequest); 
+		 boolean isLiked = (Boolean) likeRequest.get("isLiked");
+	     String userEmail = (String) likeRequest.get("userEmail"); 
+		 log.info("사용자 이메일: {}", userEmail); 
+		 log.info("공감 눌린상태?? : {}", isLiked);
+		
+		try {
+			int isUpdated; 
+			
+			if(isLiked) {
+				isUpdated = service.incrementLikeCount(boardNo, userEmail); 
+			} else {
+				isUpdated = service.decrementLikeCount(boardNo, userEmail); 
+			}
+				return ResponseEntity.ok(isUpdated);
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); 
+		}
+	}
+	
 	/** 댓글 등록 
 	 * @param boardNo
 	 * @param comment
@@ -130,36 +177,6 @@ public class BoardController {
 		                             .body(null);
 		    }
 		
-	}
-			
-	/** 좋아요 업데이트 
-	 * @param boardNo
-	 * @param likeRequest
-	 * @return
-	 */
-	@PostMapping(value = "/{id}/like", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Integer> updateLikeCount(@PathVariable("id") int boardNo, 
-												   @RequestBody Map<String, Object> likeRequest) {
-		 log.info("Received LikeRequest: {}", likeRequest); 
-		 boolean isLiked = (Boolean) likeRequest.get("isLiked");
-	     String userEmail = (String) likeRequest.get("userEmail"); 
-		 log.info("사용자 이메일: {}", userEmail); 
-		 log.info("공감 눌린상태?? : {}", isLiked);
-		
-		try {
-			int isUpdated; 
-			
-			if(isLiked) {
-				isUpdated = service.incrementLikeCount(boardNo, userEmail); 
-			} else {
-				isUpdated = service.decrementLikeCount(boardNo, userEmail); 
-			}
-				return ResponseEntity.ok(isUpdated);
-				
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); 
-		}
 	}
 	
 

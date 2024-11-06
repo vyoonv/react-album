@@ -10,6 +10,7 @@ export default interface Board {
   writerProfileImg: string | null;
   boardImg: string | null;
   userEmail: string;
+  isLiked: boolean;
 }
 
 export interface Comment {

@@ -58,5 +58,10 @@ public interface BoardService {
 	 */
 	boolean isLikedByUser(int id, String userEmail);
 
+	/** 조회수 증가 
+	 * @param id
+	 */
+	void incrementViewCount(int boardNo);
+
 
 }

@@ -51,5 +51,12 @@ public interface BoardService {
 	 */
 	int decrementLikeCount(int boardNo, String userEmail);
 
+	/** 좋아요 여부 확인 
+	 * @param id
+	 * @param userEmail
+	 * @return
+	 */
+	boolean isLikedByUser(int id, String userEmail);
+
 
 }

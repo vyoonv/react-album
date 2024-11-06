@@ -4,7 +4,7 @@ import axios from "axios";
 import Loading from "../../index/component/Loading";
 import styles from "../boardCss/BoardDetail.module.scss";
 import CommentSection from "../CommentSection";
-import { useRecoilState } from "recoil";
+import { atom, useRecoilState, useRecoilValue } from "recoil";
 import { userState } from "../../../stores/atoms/userState";
 
 function BoardDetail() {
@@ -14,24 +14,36 @@ function BoardDetail() {
   const [loading, setLoading] = useState(true);
   const [likeCount, setLikeCount] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
-  const [user] = useRecoilState(userState);
+  const user = useRecoilValue(userState);
+  console.log("사용자 정보 : ", user);
 
   useEffect(() => {
     const fetchBoardItem = async () => {
+      if (!user || !user.email) {
+        console.error("사용자 이메일이 존재하지 않습니다.");
+        return;
+      }
+      const userEmail = user.email;
+      console.log("userEmail : ", userEmail);
       try {
-        const response = await axios.get(`http://localhost/board/${id}`);
+        const response = await axios.get(`http://localhost/board/${id}`, {
+          params: { userEmail },
+        });
+        console.log("응답 데이터 : ", response.data);
         setBoardItem(response.data.boardItem);
         setComments(response.data.comments || []);
         setLikeCount(response.data.boardItem.likeCount || 0);
-        setIsLiked(response.data.isLiked || false);
+        setIsLiked(response.data.isLiked);
       } catch (error) {
         console.error("게시물 데이터를 불러오지 못했습니다.", error);
       } finally {
         setLoading(false);
       }
     };
-    fetchBoardItem();
-  }, [id]);
+    if (user && user.email) {
+      fetchBoardItem();
+    }
+  }, [id, user]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -57,7 +69,7 @@ function BoardDetail() {
         userEmail: user.email,
       });
       console.log("Response Data:", response.data);
-      setLikeCount(response.data);
+      setLikeCount(response.data.likeCount);
       setIsLiked(newLikedState);
     } catch (error) {
       console.error("좋아요 업데이트 실패", error);

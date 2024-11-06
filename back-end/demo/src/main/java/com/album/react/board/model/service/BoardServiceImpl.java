@@ -13,7 +13,9 @@ import com.album.react.board.model.mapper.BoardMapper;
 import com.album.react.comment.model.dto.Comment;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Transactional
 @Service
 @RequiredArgsConstructor
@@ -115,6 +117,23 @@ public class BoardServiceImpl implements BoardService{
 			return 0; 
 		}
 		
+	}
+
+	/**
+	 * 좋아요 여부 확인 
+	 */
+	@Override
+	public boolean isLikedByUser(int boardNo, String userEmail) {
+		
+		Map<String, Object> params = new HashMap<>(); 
+		params.put("boardNo", boardNo); 
+		params.put("userEmail", userEmail); 
+		log.info("Checking like for boardNo: {}, userEmail: {}", boardNo, userEmail);
+
+		
+		int ifLikedBefore = mapper.checkIfLiked(params); 
+		
+		return ifLikedBefore > 0; 
 	}
 
 

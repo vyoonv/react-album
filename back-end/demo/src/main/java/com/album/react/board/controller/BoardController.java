@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.album.react.board.model.dto.Board;
@@ -73,7 +74,10 @@ public class BoardController {
 	 * @return
 	 */
 	@GetMapping("/{id}")
-	public ResponseEntity<BoardResponse> boardDetail(@PathVariable("id") int id) {
+	public ResponseEntity<BoardResponse> boardDetail(@PathVariable("id") int id,
+													 @RequestParam("userEmail") String userEmail) {
+		log.info("이메일!! : {}", userEmail); 
+		
 		Board board = service.boardDetail(id); 
 		if(board == null ) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND); 
@@ -81,10 +85,14 @@ public class BoardController {
 		
 		List<Comment> comments = service.getCommentsByBoardId(id); 
 		
+		boolean isLiked = service.isLikedByUser(id, userEmail); 
+		log.info("좋아요 여부 : {}", isLiked); 
+		
 		BoardResponse response = new BoardResponse(); 
 		response.setBoardItem(board); 
 		response.setComments(comments); 
 		response.setLikeCount(board.getLikeCount());
+		response.setLiked(isLiked); 
 		
 		return ResponseEntity.ok(response); 
 	}

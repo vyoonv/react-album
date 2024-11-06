@@ -34,7 +34,7 @@ function BoardDetail() {
         setBoardItem(response.data.boardItem);
         setComments(response.data.comments || []);
         setLikeCount(response.data.boardItem.likeCount || 0);
-        setIsLiked(response.data.boardItem.isLiked);
+        setIsLiked(response.data.isLiked);
       } catch (error) {
         console.error("게시물 데이터를 불러오지 못했습니다.", error);
       } finally {
@@ -100,7 +100,7 @@ function BoardDetail() {
                 onClick={handleLike}
                 className={styles.boardArea__boardContent__likeButton}
               >
-                공감 {boardItem.isLiked ? "❤️" : "🤍"}
+                공감 {isLiked ? "❤️" : "🤍"}
               </button>
             </div>
           </div>
